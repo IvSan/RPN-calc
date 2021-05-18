@@ -13,6 +13,7 @@ public class App {
             .push(new Addition())
             .push(new NumericOperand(100));
         System.out.println(stack.print());
+        System.out.println(stack.printHistory());
     }
 
 }

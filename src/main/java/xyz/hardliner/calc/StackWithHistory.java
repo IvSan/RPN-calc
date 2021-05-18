@@ -1,7 +1,11 @@
 package xyz.hardliner.calc;
 
+import xyz.hardliner.calc.exception.InsufficientParametersException;
+import xyz.hardliner.calc.exception.NonApplicableOperator;
+import xyz.hardliner.calc.operands.Operand;
 import xyz.hardliner.calc.operators.Operator;
 
+import java.util.ArrayList;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
@@ -16,22 +20,48 @@ public class StackWithHistory {
     }
 
     public StackWithHistory push(Item item) {
-        stack.push(item);
         history.push(item);
 
-        processStack();
+        if (item instanceof Operand) stack.push(item);
+        if (item instanceof Operator) processOperator((Operator) item);
 
         return this;
     }
 
-    private void processStack() {
-        final var item = stack.peek();
+    private void processOperator(Operator operator) {
+        validate(operator);
+        apply(operator);
+    }
 
-        if (!(item instanceof Operator)) {
-            return;
+    private void validate(Operator operator) {
+        var inputsCounter = 0;
+        Stack<?> stack = (Stack<?>) this.stack.clone();
+
+        while (!stack.empty()) {
+            if (stack.pop() instanceof Operand) {
+                inputsCounter++;
+                if (inputsCounter >= operator.inputsNumber()) {
+                    return;
+                }
+            }
         }
 
-        ((Operator) item).validateStack(stack);
+        throw new InsufficientParametersException(
+            String.format("operator %s (position: %d): insufficient parameters", print(), this.stack.size() + 1)
+        );
+    }
+
+    private void apply(Operator operator) {
+        final var operands = new ArrayList<Operand>();
+        for (int i = 0; i < operator.inputsNumber(); i++) {
+            final var operand = stack.pop();
+            if (operand instanceof Operand) {
+                operands.add((Operand) operand);
+            } else {
+                throw new NonApplicableOperator(String.format("invalid stack state: cannot apply '%s' operator on '%s'", operator.print(), print()));
+            }
+        }
+        stack.push(operator.function().apply(operands));
     }
 
     public String print() {
