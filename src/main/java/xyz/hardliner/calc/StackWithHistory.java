@@ -61,7 +61,7 @@ public class StackWithHistory {
                 throw new NonApplicableOperator(String.format("invalid stack state: cannot apply '%s' operator on '%s'", operator.print(), print()));
             }
         }
-        stack.push(operator.function().apply(operands));
+        stack.push(operator.effect().apply(operands));
     }
 
     public String print() {
