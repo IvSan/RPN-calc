@@ -1,28 +1,17 @@
-package xyz.hardliner.calc.operators;
+package xyz.hardliner.calc.operators.math;
 
 import xyz.hardliner.calc.exception.NonApplicableOperator;
-import xyz.hardliner.calc.operands.Operand;
+import xyz.hardliner.calc.operators.math.UnaryMathematicalOperator;
 
-import java.util.List;
 import java.util.function.Function;
 
 import static xyz.hardliner.calc.operands.NumericOperand.NUMBERS_FORMAT;
 
-public class SquareRoot implements Operator {
+public class SquareRoot implements UnaryMathematicalOperator {
 
     @Override
     public String print() {
         return "sqrt";
-    }
-
-    @Override
-    public int arity() {
-        return 1;
-    }
-
-    @Override
-    public Function<List<Operand>, Operand> effect() {
-        return numericUnaryFunctionWrapper();
     }
 
     @Override

@@ -1,11 +1,11 @@
 package xyz.hardliner.calc;
 
 import xyz.hardliner.calc.operands.NumericOperand;
-import xyz.hardliner.calc.operators.Addition;
-import xyz.hardliner.calc.operators.Division;
-import xyz.hardliner.calc.operators.Multiplication;
-import xyz.hardliner.calc.operators.SquareRoot;
-import xyz.hardliner.calc.operators.Subtraction;
+import xyz.hardliner.calc.operators.math.Addition;
+import xyz.hardliner.calc.operators.math.Division;
+import xyz.hardliner.calc.operators.math.Multiplication;
+import xyz.hardliner.calc.operators.math.SquareRoot;
+import xyz.hardliner.calc.operators.math.Subtraction;
 
 public class App {
 
