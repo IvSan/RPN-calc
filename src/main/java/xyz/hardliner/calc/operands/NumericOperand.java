@@ -4,7 +4,7 @@ import java.text.DecimalFormat;
 
 public class NumericOperand implements Operand {
 
-    private static final DecimalFormat FORMAT = new DecimalFormat("0.#");
+    public static final DecimalFormat NUMBERS_FORMAT = new DecimalFormat("0.#");
 
     public Number number;
 
@@ -14,6 +14,6 @@ public class NumericOperand implements Operand {
 
     @Override
     public String print() {
-        return FORMAT.format(number.doubleValue());
+        return NUMBERS_FORMAT.format(number.doubleValue());
     }
 }

@@ -29,11 +29,11 @@ public class StackWithHistory {
     }
 
     private void processOperator(Operator operator) {
-        validate(operator);
+        checkAvailableOperandsNumber(operator);
         apply(operator);
     }
 
-    private void validate(Operator operator) {
+    private void checkAvailableOperandsNumber(Operator operator) {
         var inputsCounter = 0;
         Stack<?> stack = (Stack<?>) this.stack.clone();
 
@@ -47,7 +47,7 @@ public class StackWithHistory {
         }
 
         throw new InsufficientParametersException(
-            String.format("operator %s (position: %d): insufficient parameters", print(), this.stack.size() + 1)
+            String.format("operator '%s' (position: %d): insufficient parameters", print(), this.stack.size() + 1)
         );
     }
 
@@ -58,7 +58,7 @@ public class StackWithHistory {
             if (operand instanceof Operand) {
                 operands.add((Operand) operand);
             } else {
-                throw new NonApplicableOperator(String.format("invalid stack state: cannot apply '%s' operator on '%s'", operator.print(), print()));
+                throw new NonApplicableOperator(String.format("invalid stack state: cannot apply operator '%s' on '%s'", operator.print(), print()));
             }
         }
         stack.push(operator.effect().apply(operands));

@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-public class Subtraction implements Operator {
+public class Multiplication implements Operator {
 
     @Override
     public String print() {
-        return "-";
+        return "*";
     }
 
     @Override
@@ -25,6 +25,6 @@ public class Subtraction implements Operator {
 
     @Override
     public BiFunction<Double, Double, Double> numericBinaryFunction() {
-        return (first, second) -> first - second;
+        return (first, second) -> first * second;
     }
 }

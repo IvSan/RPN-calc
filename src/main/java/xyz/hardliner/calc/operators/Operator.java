@@ -15,24 +15,45 @@ public interface Operator extends Item {
 
     Function<List<Operand>, Operand> effect();
 
-    default BiFunction<Double, Double, Double> numericBiFunction() {
+    default Function<Double, Double> numericUnaryFunction() {
+        throw new NonApplicableOperator(
+            String.format("numeric unary function for operator '%s' hasn't been implemented", print())
+        );
+    }
+
+    default Function<List<Operand>, Operand> numericUnaryFunctionWrapper() {
+        return operands -> {
+            final var num = operands.iterator().next();
+            if (num instanceof NumericOperand) {
+                return new NumericOperand(
+                    numericUnaryFunction().apply(((NumericOperand) num).number.doubleValue())
+                );
+            } else {
+                throw new NonApplicableOperator(
+                    String.format("operator '%s': cannot apply to '%s'", print(), num.print())
+                );
+            }
+        };
+    }
+
+    default BiFunction<Double, Double, Double> numericBinaryFunction() {
         throw new NonApplicableOperator(
             String.format("numeric binary function for operator '%s' hasn't been implemented", print())
         );
     }
 
-    default Function<List<Operand>, Operand> numericBiFunctionWrapper() {
+    default Function<List<Operand>, Operand> numericBinaryFunctionWrapper() {
         return operands -> {
             final var iterator = operands.iterator();
             final var first = iterator.next();
             final var second = iterator.next();
             if (first instanceof NumericOperand && second instanceof NumericOperand) {
                 return new NumericOperand(
-                    numericBiFunction().apply(((NumericOperand) second).number.doubleValue(), ((NumericOperand) first).number.doubleValue())
+                    numericBinaryFunction().apply(((NumericOperand) second).number.doubleValue(), ((NumericOperand) first).number.doubleValue())
                 );
             } else {
                 throw new NonApplicableOperator(
-                    String.format("operator %s: cannot apply to '%s' and '%s'", print(), first.print(), second.print())
+                    String.format("operator '%s': cannot apply to '%s' and '%s'", print(), first.print(), second.print())
                 );
             }
         };
