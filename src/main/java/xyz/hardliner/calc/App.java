@@ -12,16 +12,16 @@ public class App {
     public static void main(String[] args) {
         var stack = new StackWithHistory();
         stack
-            .push(new NumericOperand(5))
-            .push(new NumericOperand(11))
-            .push(new Addition())
-            .push(new NumericOperand(100))
-            .push(new Subtraction())
-            .push(new NumericOperand(20))
-            .push(new Division())
-            .push(new NumericOperand(9))
-            .push(new SquareRoot())
-            .push(new Multiplication());
+            .process(new NumericOperand(5))
+            .process(new NumericOperand(11))
+            .process(new Addition())
+            .process(new NumericOperand(100))
+            .process(new Subtraction())
+            .process(new NumericOperand(20))
+            .process(new Division())
+            .process(new NumericOperand(9))
+            .process(new SquareRoot())
+            .process(new Multiplication());
         System.out.println(stack.print());
         System.out.println(stack.printHistory());
     }

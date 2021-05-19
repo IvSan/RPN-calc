@@ -1,6 +1,6 @@
 package xyz.hardliner.calc.operators.math;
 
-import xyz.hardliner.calc.exception.NonApplicableOperator;
+import xyz.hardliner.calc.exception.NonApplicableOperation;
 import xyz.hardliner.calc.operands.NumericOperand;
 import xyz.hardliner.calc.operands.Operand;
 
@@ -24,7 +24,7 @@ public interface BinaryMathematicalOperator extends MathematicalOperator {
                     numericBinaryFunction().apply(((NumericOperand) second).number.doubleValue(), ((NumericOperand) first).number.doubleValue())
                 );
             } else {
-                throw new NonApplicableOperator(
+                throw new NonApplicableOperation(
                     String.format("operator '%s': cannot apply to '%s' and '%s'", print(), first.print(), second.print())
                 );
             }
