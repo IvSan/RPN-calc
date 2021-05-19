@@ -20,11 +20,11 @@ public class Addition implements Operator {
 
     @Override
     public Function<List<Operand>, Operand> effect() {
-        return numericBiFunctionWrapper();
+        return numericBinaryFunctionWrapper();
     }
 
     @Override
-    public BiFunction<Double, Double, Double> numericBiFunction() {
+    public BiFunction<Double, Double, Double> numericBinaryFunction() {
         return Double::sum;
     }
 }
