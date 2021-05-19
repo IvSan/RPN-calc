@@ -11,7 +11,7 @@ import java.util.function.Function;
 
 public interface Operator extends Item {
 
-    int inputsNumber();
+    int arity();
 
     Function<List<Operand>, Operand> effect();
 

@@ -40,7 +40,7 @@ public class StackWithHistory {
         while (!stack.empty()) {
             if (stack.pop() instanceof Operand) {
                 inputsCounter++;
-                if (inputsCounter >= operator.inputsNumber()) {
+                if (inputsCounter >= operator.arity()) {
                     return;
                 }
             }
@@ -53,7 +53,7 @@ public class StackWithHistory {
 
     private void apply(Operator operator) {
         final var operands = new ArrayList<Operand>();
-        for (int i = 0; i < operator.inputsNumber(); i++) {
+        for (int i = 0; i < operator.arity(); i++) {
             final var operand = stack.pop();
             if (operand instanceof Operand) {
                 operands.add((Operand) operand);

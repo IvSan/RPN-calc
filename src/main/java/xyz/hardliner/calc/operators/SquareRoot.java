@@ -16,7 +16,7 @@ public class SquareRoot implements Operator {
     }
 
     @Override
-    public int inputsNumber() {
+    public int arity() {
         return 1;
     }
 

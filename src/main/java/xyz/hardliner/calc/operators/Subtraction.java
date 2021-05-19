@@ -14,7 +14,7 @@ public class Subtraction implements Operator {
     }
 
     @Override
-    public int inputsNumber() {
+    public int arity() {
         return 2;
     }
 
