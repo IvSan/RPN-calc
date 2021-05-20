@@ -2,7 +2,9 @@ package xyz.hardliner.calc;
 
 import org.junit.jupiter.api.Test;
 import xyz.hardliner.calc.operands.NumericOperand;
+import xyz.hardliner.calc.operators.math.Addition;
 import xyz.hardliner.calc.operators.math.SquareRoot;
+import xyz.hardliner.calc.operators.math.Subtraction;
 import xyz.hardliner.calc.operators.special.Undo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -63,5 +65,35 @@ public class StackWithHistoryTest {
 
         assertEquals("", stack.print());
         assertEquals("", stack.printHistory());
+    }
+
+    @Test
+    public void binary_operator_undo() {
+        final var stack = new StackWithHistory();
+
+        stack
+            .process(new NumericOperand(4))
+            .process(new NumericOperand(3))
+            .process(new NumericOperand(2))
+            .process(new Subtraction())
+            .process(new Addition());
+
+        assertEquals("5", stack.print());
+        assertEquals("4 3 2 - +", stack.printHistory());
+
+        stack.process(new Undo());
+
+        assertEquals("4 1", stack.print());
+        assertEquals("4 3 2 -", stack.printHistory());
+
+        stack.process(new Undo());
+
+        assertEquals("4 3 2", stack.print());
+        assertEquals("4 3 2", stack.printHistory());
+
+        stack.process(new Undo());
+
+        assertEquals("4 3", stack.print());
+        assertEquals("4 3", stack.printHistory());
     }
 }

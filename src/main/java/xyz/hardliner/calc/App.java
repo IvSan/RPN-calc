@@ -1,7 +1,7 @@
 package xyz.hardliner.calc;
 
 import xyz.hardliner.calc.operands.NumericOperand;
-import xyz.hardliner.calc.operators.math.SquareRoot;
+import xyz.hardliner.calc.operators.math.Addition;
 import xyz.hardliner.calc.operators.special.Undo;
 
 public class App {
@@ -18,7 +18,7 @@ public class App {
 //            .process(new Division())
 //            .process(new NumericOperand(9))
 //            .process(new SquareRoot())
-//            .process(new Multiplication())
+//            .process(new Multiplication());
 //            .process(new Undo());
 //        stack
 //            .process(new NumericOperand(20))
@@ -27,11 +27,17 @@ public class App {
 //            .process(new Addition())
 //            .process(new Undo())
 //        ;
-        stack
-            .process(new NumericOperand(81))
-            .process(new SquareRoot())
-            .process(new Undo())
+//        stack
+//            .process(new NumericOperand(81))
+//            .process(new SquareRoot())
 //            .process(new Undo())
+//            .process(new Undo())
+//        ;
+        stack
+            .process(new NumericOperand(2))
+            .process(new NumericOperand(3))
+            .process(new Addition())
+            .process(new Undo())
         ;
         System.out.println(stack.print());
         System.out.println(stack.printHistory());
