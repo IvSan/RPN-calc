@@ -29,16 +29,16 @@ public class Undo implements SpecialOperator {
 
                 if (history.empty()) return; // nothing to undo
 
-                final var last = history.pop();
+                final var itemToUndo = history.pop();
                 stack.pop();
 
-                if (last instanceof Operand) return;
+                if (itemToUndo instanceof Operand) return;
 
-                if (last instanceof UnaryMathematicalOperator) {
-                    stack.push(unpackUnaryOperation((UnaryMathematicalOperator) last, history, new Stack<>()));
+                if (itemToUndo instanceof UnaryMathematicalOperator) {
+                    stack.push(unpackItem(cloneStack(history)));
                 }
 
-                if (last instanceof BinaryMathematicalOperator) {
+                if (itemToUndo instanceof BinaryMathematicalOperator) {
                     final var pair = unpackBinaryOperation(cloneStack(history));
                     stack.push(pair.getLeft());
                     stack.push(pair.getRight());
@@ -46,46 +46,23 @@ public class Undo implements SpecialOperator {
             });
     }
 
-    private static Item unpackUnaryOperation(UnaryMathematicalOperator lastOperator, Stack<Item> history, Stack<Item> accumulator) {
-        final var previous = history.pop();
-        accumulator.push(previous);
-
-        if (previous instanceof Operand) {
-            while (!accumulator.isEmpty()) {
-                history.push(accumulator.pop());
-            }
-            return previous;
-        } else if (previous instanceof UnaryMathematicalOperator) {
-            return lastOperator.effect().apply(List.of((Operand) unpackUnaryOperation((UnaryMathematicalOperator) previous, history, accumulator)));
-        } else throw new IllegalStateException("fff");
+    private static Pair<Item, Item> unpackBinaryOperation(Stack<Item> history) {
+        final var second = unpackItem(history);
+        final var first = unpackItem(history);
+        return Pair.of(first, second);
     }
 
-    private static Pair<Item, Item> unpackBinaryOperation(Stack<Item> history) {
-
-        final var second = history.pop();
-        final Item secondToReturn;
-
-        if (second instanceof Operand) {
-            secondToReturn = second;
-        } else if (second instanceof BinaryMathematicalOperator) {
+    private static Item unpackItem(Stack<Item> history) {
+        final var item = history.pop();
+        if (item instanceof Operand) {
+            return item;
+        } else if (item instanceof UnaryMathematicalOperator) {
+            return ((UnaryMathematicalOperator) item).effect().apply(List.of((Operand) unpackItem(history)));
+        } else if (item instanceof BinaryMathematicalOperator) {
             final var pair = unpackBinaryOperation(history);
-            secondToReturn = ((BinaryMathematicalOperator) second).effect().apply(List.of((Operand) pair.getRight(), (Operand) pair.getLeft()));
+            return ((BinaryMathematicalOperator) item).effect().apply(List.of((Operand) pair.getRight(), (Operand) pair.getLeft()));
         } else {
-            throw new NonApplicableOperation("Undo operation hasn't been implemented for " + second.print());
+            throw new NonApplicableOperation("Undo operation hasn't been implemented for " + item.print());
         }
-
-        final var first = history.pop();
-        final Item firstToReturn;
-
-        if (first instanceof Operand) {
-            firstToReturn = first;
-        } else if (second instanceof BinaryMathematicalOperator) {
-            final var pair = unpackBinaryOperation(history);
-            firstToReturn = ((BinaryMathematicalOperator) second).effect().apply(List.of((Operand) pair.getRight(), (Operand) pair.getLeft()));
-        } else {
-            throw new NonApplicableOperation("Undo operation hasn't been implemented for " + second.print());
-        }
-
-        return Pair.of(firstToReturn, secondToReturn);
     }
 }
