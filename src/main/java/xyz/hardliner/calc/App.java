@@ -11,8 +11,8 @@ import xyz.hardliner.calc.operators.special.Undo;
 public class App {
 
     public static void main(String[] args) {
-        var stack = new StackWithHistory();
-        stack
+        var calc = new Calculator();
+        calc
             .process(new NumericOperand(5))
             .process(new NumericOperand(11))
             .process(new Addition())
@@ -26,8 +26,8 @@ public class App {
             .process(new Undo())
         ;
 
-        System.out.println(stack.print());
-        System.out.println(stack.printHistory());
+        System.out.println(calc.print());
+        System.out.println(calc.printHistory());
     }
 
 }

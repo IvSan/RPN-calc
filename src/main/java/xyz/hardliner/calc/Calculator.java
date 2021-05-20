@@ -10,13 +10,13 @@ import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
-public class StackWithHistory {
+public class Calculator {
 
     public final Stack<Item> stack;
     public final Stack<Item> history;
     private final List<ItemResolvingRule> rules;
 
-    public StackWithHistory() {
+    public Calculator() {
         stack = new Stack<>();
         history = new Stack<>();
 
@@ -29,7 +29,7 @@ public class StackWithHistory {
         );
     }
 
-    public StackWithHistory process(Item item) {
+    public Calculator process(Item item) {
         rules.stream().filter(rule -> rule.isApplicable(item)).findFirst().get().apply(item, stack, history);
         return this;
     }

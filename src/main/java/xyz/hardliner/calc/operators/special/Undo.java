@@ -33,15 +33,14 @@ public class Undo implements SpecialOperator {
                 stack.pop();
 
                 if (itemToUndo instanceof Operand) return;
-
-                if (itemToUndo instanceof UnaryMathematicalOperator) {
+                else if (itemToUndo instanceof UnaryMathematicalOperator) {
                     stack.push(unpackItem(cloneStack(history)));
-                }
-
-                if (itemToUndo instanceof BinaryMathematicalOperator) {
+                } else if (itemToUndo instanceof BinaryMathematicalOperator) {
                     final var pair = unpackBinaryOperation(cloneStack(history));
                     stack.push(pair.getLeft());
                     stack.push(pair.getRight());
+                } else {
+                    throw new NonApplicableOperation("Undo operation hasn't been implemented for " + itemToUndo.print());
                 }
             });
     }
