@@ -1,4 +1,4 @@
-package xyz.hardliner.calc;
+package xyz.hardliner.calc.service;
 
 import xyz.hardliner.calc.exception.NonApplicableOperation;
 import xyz.hardliner.calc.operands.Operand;

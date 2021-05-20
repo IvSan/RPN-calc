@@ -1,12 +1,12 @@
 package xyz.hardliner.calc.operators.special;
 
 import org.apache.commons.lang3.tuple.Pair;
-import xyz.hardliner.calc.Item;
-import xyz.hardliner.calc.ItemResolvingRule;
 import xyz.hardliner.calc.exception.NonApplicableOperation;
 import xyz.hardliner.calc.operands.Operand;
 import xyz.hardliner.calc.operators.math.BinaryMathematicalOperator;
 import xyz.hardliner.calc.operators.math.UnaryMathematicalOperator;
+import xyz.hardliner.calc.service.Item;
+import xyz.hardliner.calc.service.ItemResolvingRule;
 
 import java.util.List;
 import java.util.Stack;

@@ -1,11 +1,11 @@
 package xyz.hardliner.calc.operators.math;
 
-import xyz.hardliner.calc.Item;
-import xyz.hardliner.calc.ItemResolvingRule;
 import xyz.hardliner.calc.exception.InsufficientParametersException;
 import xyz.hardliner.calc.exception.NonApplicableOperation;
 import xyz.hardliner.calc.operands.Operand;
 import xyz.hardliner.calc.operators.Operator;
+import xyz.hardliner.calc.service.Item;
+import xyz.hardliner.calc.service.ItemResolvingRule;
 
 import java.util.ArrayList;
 import java.util.List;

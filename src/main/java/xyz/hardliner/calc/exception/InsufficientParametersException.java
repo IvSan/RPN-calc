@@ -1,6 +1,6 @@
 package xyz.hardliner.calc.exception;
 
-public class InsufficientParametersException extends RuntimeException implements CalculatorException {
+public class InsufficientParametersException extends CalculatorException {
 
     public InsufficientParametersException(String message) {
         super(message);
@@ -9,4 +9,5 @@ public class InsufficientParametersException extends RuntimeException implements
     public InsufficientParametersException(String message, Throwable cause) {
         super(message, cause);
     }
+
 }

@@ -1,6 +1,6 @@
 package xyz.hardliner.calc.exception;
 
-public class NonApplicableOperation extends RuntimeException implements CalculatorException {
+public class NonApplicableOperation extends CalculatorException {
 
     public NonApplicableOperation(String message) {
         super(message);
@@ -9,4 +9,5 @@ public class NonApplicableOperation extends RuntimeException implements Calculat
     public NonApplicableOperation(String message, Throwable cause) {
         super(message, cause);
     }
+
 }

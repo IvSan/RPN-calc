@@ -1,4 +1,4 @@
-package xyz.hardliner.calc;
+package xyz.hardliner.calc.service;
 
 public interface Item {
 

@@ -1,12 +1,12 @@
 package xyz.hardliner.calc.operators.special;
 
 import org.junit.jupiter.api.Test;
-import xyz.hardliner.calc.Calculator;
 import xyz.hardliner.calc.operands.NumericOperand;
 import xyz.hardliner.calc.operators.math.Addition;
 import xyz.hardliner.calc.operators.math.Multiplication;
 import xyz.hardliner.calc.operators.math.SquareRoot;
 import xyz.hardliner.calc.operators.math.Subtraction;
+import xyz.hardliner.calc.service.Calculator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

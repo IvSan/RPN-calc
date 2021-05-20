@@ -1,4 +1,4 @@
-package xyz.hardliner.calc;
+package xyz.hardliner.calc.service;
 
 import org.apache.commons.lang3.tuple.Pair;
 

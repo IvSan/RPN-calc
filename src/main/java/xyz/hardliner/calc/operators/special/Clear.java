@@ -1,6 +1,6 @@
 package xyz.hardliner.calc.operators.special;
 
-import xyz.hardliner.calc.ItemResolvingRule;
+import xyz.hardliner.calc.service.ItemResolvingRule;
 
 public class Clear implements SpecialOperator {
 

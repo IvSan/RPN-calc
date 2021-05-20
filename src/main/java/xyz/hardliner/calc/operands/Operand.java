@@ -1,7 +1,7 @@
 package xyz.hardliner.calc.operands;
 
-import xyz.hardliner.calc.Item;
-import xyz.hardliner.calc.ItemResolvingRule;
+import xyz.hardliner.calc.service.Item;
+import xyz.hardliner.calc.service.ItemResolvingRule;
 
 public interface Operand extends Item {
 

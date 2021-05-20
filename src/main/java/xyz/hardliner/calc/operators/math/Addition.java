@@ -2,11 +2,13 @@ package xyz.hardliner.calc.operators.math;
 
 import java.util.function.BiFunction;
 
+import static xyz.hardliner.calc.utils.OperatorUtils.ADDITION;
+
 public class Addition implements BinaryMathematicalOperator {
 
     @Override
     public String print() {
-        return "+";
+        return ADDITION.alias;
     }
 
     @Override
