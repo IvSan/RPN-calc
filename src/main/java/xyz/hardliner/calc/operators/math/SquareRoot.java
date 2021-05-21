@@ -9,13 +9,14 @@ import java.util.function.Function;
 
 import static xyz.hardliner.calc.service.ApplicableCheck.failedCheck;
 import static xyz.hardliner.calc.service.ApplicableCheck.successfulCheck;
+import static xyz.hardliner.calc.utils.Operators.SQUARE_ROOT;
 import static xyz.hardliner.calc.utils.StackUtils.cloneStack;
 
 public class SquareRoot implements UnaryMathematicalOperator {
 
     @Override
     public String print() {
-        return "sqrt";
+        return SQUARE_ROOT.alias;
     }
 
     @Override

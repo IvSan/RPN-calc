@@ -14,7 +14,7 @@ import java.util.function.Supplier;
 
 import static java.util.Arrays.stream;
 
-public enum OperatorUtils {
+public enum Operators {
     ADDITION("+", Addition::new),
     SUBTRACTION("-", Subtraction::new),
     MULTIPLICATION("*", Multiplication::new),
@@ -27,13 +27,13 @@ public enum OperatorUtils {
     public final String alias;
     private final Supplier<Operator> operatorGenerator;
 
-    OperatorUtils(String alias, Supplier<Operator> operatorGenerator) {
+    Operators(String alias, Supplier<Operator> operatorGenerator) {
         this.alias = alias;
         this.operatorGenerator = operatorGenerator;
     }
 
-    public static Operator parse(String alias) {
-        final var operator = stream(OperatorUtils.values()).filter(a -> a.alias.equals(alias)).findFirst()
+    public static Operator parseOperator(String alias) {
+        final var operator = stream(Operators.values()).filter(a -> a.alias.equals(alias)).findFirst()
             .orElseThrow(() -> new NonApplicableOperation("Unrecognized operator: " + alias));
         return operator.operatorGenerator.get();
     }

@@ -2,7 +2,7 @@ package xyz.hardliner.calc.operators.math;
 
 import java.util.function.BiFunction;
 
-import static xyz.hardliner.calc.utils.OperatorUtils.DIVISION;
+import static xyz.hardliner.calc.utils.Operators.DIVISION;
 
 public class Division implements BinaryMathematicalOperator {
 

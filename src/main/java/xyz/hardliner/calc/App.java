@@ -19,7 +19,7 @@ public class App {
         while (!"exit".equals(line)) {
 
             try {
-                for (Item item : parser.parse(line)) {
+                for (Item item : parser.parseLine(line)) {
                     calc.process(item);
                 }
             } catch (CalculatorException ex) {

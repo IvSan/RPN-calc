@@ -5,13 +5,13 @@ public class ApplicableCheck {
     private final boolean ok;
     private final String failMessage;
 
-    public ApplicableCheck(boolean ok, String failMessage) {
+    private ApplicableCheck(boolean ok, String failMessage) {
         this.ok = ok;
         this.failMessage = failMessage;
     }
 
     public static ApplicableCheck successfulCheck() {
-        return new ApplicableCheck(true, "");
+        return new ApplicableCheck(true, null);
     }
 
     public static ApplicableCheck failedCheck(String message) {

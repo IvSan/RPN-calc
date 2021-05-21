@@ -2,7 +2,7 @@ package xyz.hardliner.calc.operators.math;
 
 import java.util.function.BiFunction;
 
-import static xyz.hardliner.calc.utils.OperatorUtils.ADDITION;
+import static xyz.hardliner.calc.utils.Operators.ADDITION;
 
 public class Addition implements BinaryMathematicalOperator {
 

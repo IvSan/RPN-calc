@@ -8,12 +8,13 @@ import java.util.Stack;
 import java.util.function.Function;
 
 import static xyz.hardliner.calc.service.ApplicableCheck.successfulCheck;
+import static xyz.hardliner.calc.utils.Operators.CLEAR;
 
 public class Clear implements SpecialOperator {
 
     @Override
     public String print() {
-        return "clear";
+        return CLEAR.alias;
     }
 
     @Override

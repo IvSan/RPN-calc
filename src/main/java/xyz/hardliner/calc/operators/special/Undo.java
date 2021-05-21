@@ -14,13 +14,14 @@ import java.util.Stack;
 import java.util.function.Function;
 
 import static xyz.hardliner.calc.service.ApplicableCheck.successfulCheck;
+import static xyz.hardliner.calc.utils.Operators.UNDO;
 import static xyz.hardliner.calc.utils.StackUtils.cloneStack;
 
 public class Undo implements SpecialOperator {
 
     @Override
     public String print() {
-        return "undo";
+        return UNDO.alias;
     }
 
     @Override
