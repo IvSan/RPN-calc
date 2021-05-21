@@ -5,7 +5,7 @@ import xyz.hardliner.calc.service.ItemResolvingRule;
 
 public interface Operand extends Item {
 
-    static ItemResolvingRule resolvingRule() {
+    default ItemResolvingRule resolvingRule() {
         return new ItemResolvingRule(
             item -> item instanceof Operand,
             (item, state) -> {

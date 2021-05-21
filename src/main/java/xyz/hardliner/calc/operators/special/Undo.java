@@ -5,12 +5,15 @@ import xyz.hardliner.calc.exception.NonApplicableOperation;
 import xyz.hardliner.calc.operands.Operand;
 import xyz.hardliner.calc.operators.math.BinaryMathematicalOperator;
 import xyz.hardliner.calc.operators.math.UnaryMathematicalOperator;
+import xyz.hardliner.calc.service.ApplicableCheck;
 import xyz.hardliner.calc.service.Item;
 import xyz.hardliner.calc.service.ItemResolvingRule;
 
 import java.util.List;
 import java.util.Stack;
+import java.util.function.Function;
 
+import static xyz.hardliner.calc.service.ApplicableCheck.successfulCheck;
 import static xyz.hardliner.calc.utils.StackUtils.cloneStack;
 
 public class Undo implements SpecialOperator {
@@ -20,7 +23,13 @@ public class Undo implements SpecialOperator {
         return "undo";
     }
 
-    public static ItemResolvingRule resolvingRule() {
+    @Override
+    public Function<Stack<Item>, ApplicableCheck> applicableChecker() {
+        return items -> successfulCheck();
+    }
+
+    @Override
+    public ItemResolvingRule resolvingRule() {
         return new ItemResolvingRule(
             item -> item instanceof Undo,
             (item, state) -> {

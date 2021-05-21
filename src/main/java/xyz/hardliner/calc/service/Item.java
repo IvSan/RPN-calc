@@ -4,4 +4,6 @@ public interface Item {
 
     String print();
 
+    ItemResolvingRule resolvingRule();
+
 }

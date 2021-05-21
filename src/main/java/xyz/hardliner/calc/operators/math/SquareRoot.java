@@ -1,10 +1,15 @@
 package xyz.hardliner.calc.operators.math;
 
-import xyz.hardliner.calc.exception.NonApplicableOperation;
+import xyz.hardliner.calc.operands.NumericOperand;
+import xyz.hardliner.calc.service.ApplicableCheck;
+import xyz.hardliner.calc.service.Item;
 
+import java.util.Stack;
 import java.util.function.Function;
 
-import static xyz.hardliner.calc.operands.NumericOperand.NUMBERS_FORMAT;
+import static xyz.hardliner.calc.service.ApplicableCheck.failedCheck;
+import static xyz.hardliner.calc.service.ApplicableCheck.successfulCheck;
+import static xyz.hardliner.calc.utils.StackUtils.cloneStack;
 
 public class SquareRoot implements UnaryMathematicalOperator {
 
@@ -14,12 +19,30 @@ public class SquareRoot implements UnaryMathematicalOperator {
     }
 
     @Override
+    public Function<Stack<Item>, ApplicableCheck> applicableChecker() {
+        return stack -> {
+            final var operandsNumberCheck = availableOperandsNumberChecker().apply(stack);
+            if (operandsNumberCheck.isFail()) {
+                return operandsNumberCheck;
+            }
+            return positiveNumberChecker().apply(stack);
+        };
+    }
+
+    @Override
     public Function<Double, Double> numericUnaryFunction() {
-        return num -> {
-            if (num < 0) throw new NonApplicableOperation(
-                String.format("Cannot apply operator '%s' to negative number %s", print(), NUMBERS_FORMAT.format(num))
+        return Math::sqrt;
+    }
+
+    private Function<Stack<Item>, ApplicableCheck> positiveNumberChecker() {
+        return actualStack -> {
+            final var topItem = cloneStack(actualStack).pop();
+            if ((topItem instanceof NumericOperand) && ((NumericOperand) topItem).number.doubleValue() >= 0) {
+                return successfulCheck();
+            }
+            return failedCheck(
+                String.format("operator '%s' (position: %d): cannot apply to '%s'", print(), actualStack.size() + 1, topItem.print())
             );
-            return Math.sqrt(num);
         };
     }
 }
