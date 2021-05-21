@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
+import static java.lang.String.format;
+
 public interface BinaryMathematicalOperator extends MathematicalOperator {
 
     default int arity() {
@@ -26,7 +28,7 @@ public interface BinaryMathematicalOperator extends MathematicalOperator {
                 );
             } else {
                 throw new NonApplicableOperation(
-                    String.format("operator '%s': cannot apply to '%s' and '%s'", print(), first.print(), second.print())
+                    format("operator '%s': cannot apply to '%s' and '%s'", print(), first.print(), second.print())
                 );
             }
         };

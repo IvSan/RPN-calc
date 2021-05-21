@@ -8,6 +8,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.function.Function;
 
+import static java.lang.String.format;
+
 public interface UnaryMathematicalOperator extends MathematicalOperator {
 
     default int arity() {
@@ -23,7 +25,7 @@ public interface UnaryMathematicalOperator extends MathematicalOperator {
                 );
             } else {
                 throw new NonApplicableOperation(
-                    String.format("operator '%s': cannot apply to '%s'", print(), num.print())
+                    format("operator '%s': cannot apply to '%s'", print(), num.print())
                 );
             }
         };

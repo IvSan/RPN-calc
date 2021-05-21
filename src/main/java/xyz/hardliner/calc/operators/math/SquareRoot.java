@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.Stack;
 import java.util.function.Function;
 
+import static java.lang.String.format;
 import static java.math.MathContext.DECIMAL64;
 import static xyz.hardliner.calc.service.ApplicableCheck.failedCheck;
 import static xyz.hardliner.calc.service.ApplicableCheck.successfulCheck;
@@ -44,7 +45,7 @@ public class SquareRoot implements UnaryMathematicalOperator {
                 return successfulCheck();
             }
             return failedCheck(
-                String.format("operator '%s' (position: %d): cannot apply to '%s'", print(), actualStack.size() + 1, topItem.print())
+                format("operator '%s' (position: %d): cannot apply to '%s'", print(), actualStack.size() + 1, topItem.print())
             );
         };
     }

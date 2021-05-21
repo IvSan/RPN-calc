@@ -12,6 +12,7 @@ import xyz.hardliner.calc.operators.special.Undo;
 
 import java.util.function.Supplier;
 
+import static java.lang.String.format;
 import static java.util.Arrays.stream;
 
 public enum Operators {
@@ -34,7 +35,7 @@ public enum Operators {
 
     public static Operator parseOperator(String alias) {
         final var operator = stream(Operators.values()).filter(a -> a.alias.equals(alias)).findFirst()
-            .orElseThrow(() -> new NonApplicableOperation("Unrecognized operator: " + alias));
+            .orElseThrow(() -> new NonApplicableOperation(format("unrecognized operator: '%s'", alias)));
         return operator.operatorGenerator.get();
     }
 }

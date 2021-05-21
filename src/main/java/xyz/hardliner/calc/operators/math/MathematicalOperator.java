@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Stack;
 import java.util.function.Function;
 
+import static java.lang.String.format;
 import static xyz.hardliner.calc.service.ApplicableCheck.failedCheck;
 import static xyz.hardliner.calc.service.ApplicableCheck.successfulCheck;
 import static xyz.hardliner.calc.utils.StackUtils.cloneStack;
@@ -65,7 +66,7 @@ public interface MathematicalOperator extends Operator {
             }
 
             return failedCheck(
-                String.format("operator '%s' (position: %d): insufficient parameters", print(), actualStack.size() + 1)
+                format("operator '%s' (position: %d): insufficient parameters", print(), actualStack.size() + 1)
             );
         };
     }
