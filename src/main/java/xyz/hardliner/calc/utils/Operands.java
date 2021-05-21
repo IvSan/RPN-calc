@@ -5,6 +5,7 @@ import xyz.hardliner.calc.exception.NonApplicableOperation;
 import xyz.hardliner.calc.operands.NumericOperand;
 import xyz.hardliner.calc.operands.Operand;
 
+import java.math.BigDecimal;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -12,7 +13,7 @@ import static java.util.Arrays.stream;
 
 public enum Operands {
     NUMBER(NumberUtils::isParsable, line -> {
-        return new NumericOperand(Double.parseDouble(line));
+        return new NumericOperand(new BigDecimal(line));
     });
 
     private final Predicate<String> checker;

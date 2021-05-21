@@ -4,9 +4,11 @@ import xyz.hardliner.calc.operands.NumericOperand;
 import xyz.hardliner.calc.service.ApplicableCheck;
 import xyz.hardliner.calc.service.Item;
 
+import java.math.BigDecimal;
 import java.util.Stack;
 import java.util.function.Function;
 
+import static java.math.MathContext.DECIMAL64;
 import static xyz.hardliner.calc.service.ApplicableCheck.failedCheck;
 import static xyz.hardliner.calc.service.ApplicableCheck.successfulCheck;
 import static xyz.hardliner.calc.utils.Operators.SQUARE_ROOT;
@@ -31,8 +33,8 @@ public class SquareRoot implements UnaryMathematicalOperator {
     }
 
     @Override
-    public Function<Double, Double> numericUnaryFunction() {
-        return Math::sqrt;
+    public Function<BigDecimal, BigDecimal> numericUnaryFunction() {
+        return num -> num.sqrt(DECIMAL64);
     }
 
     private Function<Stack<Item>, ApplicableCheck> positiveNumberChecker() {

@@ -55,13 +55,13 @@ public class Undo implements SpecialOperator {
             });
     }
 
-    private static Pair<Item, Item> unpackBinaryOperation(Stack<Item> history) {
+    private Pair<Item, Item> unpackBinaryOperation(Stack<Item> history) {
         final var second = unpackItem(history);
         final var first = unpackItem(history);
         return Pair.of(first, second);
     }
 
-    private static Item unpackItem(Stack<Item> history) {
+    private Item unpackItem(Stack<Item> history) {
         final var item = history.pop();
         if (item instanceof Operand) {
             return item;

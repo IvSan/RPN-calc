@@ -4,6 +4,7 @@ import xyz.hardliner.calc.exception.NonApplicableOperation;
 import xyz.hardliner.calc.operands.NumericOperand;
 import xyz.hardliner.calc.operands.Operand;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.function.Function;
 
@@ -18,7 +19,7 @@ public interface UnaryMathematicalOperator extends MathematicalOperator {
             final var num = operands.iterator().next();
             if (num instanceof NumericOperand) {
                 return new NumericOperand(
-                    numericUnaryFunction().apply(((NumericOperand) num).number.doubleValue())
+                    numericUnaryFunction().apply(((NumericOperand) num).number)
                 );
             } else {
                 throw new NonApplicableOperation(
@@ -28,6 +29,6 @@ public interface UnaryMathematicalOperator extends MathematicalOperator {
         };
     }
 
-    Function<Double, Double> numericUnaryFunction();
+    Function<BigDecimal, BigDecimal> numericUnaryFunction();
 
 }

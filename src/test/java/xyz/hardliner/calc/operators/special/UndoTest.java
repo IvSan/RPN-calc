@@ -17,9 +17,9 @@ public class UndoTest {
         final var calc = new Calculator();
 
         calc
-            .process(new NumericOperand(81))
-            .process(new NumericOperand(15.5))
-            .process(new NumericOperand(10));
+            .process(new NumericOperand("81"))
+            .process(new NumericOperand("15.5"))
+            .process(new NumericOperand("10"));
 
         assertEquals("81 15.5 10", calc.print());
         assertEquals("81 15.5 10", calc.printHistory());
@@ -45,7 +45,7 @@ public class UndoTest {
         final var calc = new Calculator();
 
         calc
-            .process(new NumericOperand(81))
+            .process(new NumericOperand("81"))
             .process(new SquareRoot())
             .process(new SquareRoot());
 
@@ -73,9 +73,9 @@ public class UndoTest {
         final var calc = new Calculator();
 
         calc
-            .process(new NumericOperand(4))
-            .process(new NumericOperand(3))
-            .process(new NumericOperand(2))
+            .process(new NumericOperand("4"))
+            .process(new NumericOperand("3"))
+            .process(new NumericOperand("2"))
             .process(new Subtraction())
             .process(new Addition());
 
@@ -103,11 +103,11 @@ public class UndoTest {
         final var calc = new Calculator();
 
         calc
-            .process(new NumericOperand(10))
-            .process(new NumericOperand(9))
+            .process(new NumericOperand("10"))
+            .process(new NumericOperand("9"))
             .process(new SquareRoot())
             .process(new Addition())
-            .process(new NumericOperand(4))
+            .process(new NumericOperand("4"))
             .process(new SquareRoot())
             .process(new Multiplication());
 
@@ -154,7 +154,7 @@ public class UndoTest {
     public void undo_nothing() {
         final var calc = new Calculator();
 
-        calc.process(new NumericOperand(10));
+        calc.process(new NumericOperand("10"));
 
         assertEquals("10", calc.print());
         assertEquals("10", calc.printHistory());

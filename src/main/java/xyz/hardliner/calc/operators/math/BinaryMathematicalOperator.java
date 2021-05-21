@@ -4,6 +4,7 @@ import xyz.hardliner.calc.exception.NonApplicableOperation;
 import xyz.hardliner.calc.operands.NumericOperand;
 import xyz.hardliner.calc.operands.Operand;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -21,7 +22,7 @@ public interface BinaryMathematicalOperator extends MathematicalOperator {
             final var second = iterator.next();
             if (first instanceof NumericOperand && second instanceof NumericOperand) {
                 return new NumericOperand(
-                    numericBinaryFunction().apply(((NumericOperand) second).number.doubleValue(), ((NumericOperand) first).number.doubleValue())
+                    numericBinaryFunction().apply(((NumericOperand) second).number, ((NumericOperand) first).number)
                 );
             } else {
                 throw new NonApplicableOperation(
@@ -31,6 +32,6 @@ public interface BinaryMathematicalOperator extends MathematicalOperator {
         };
     }
 
-    BiFunction<Double, Double, Double> numericBinaryFunction();
+    BiFunction<BigDecimal, BigDecimal, BigDecimal> numericBinaryFunction();
 
 }
