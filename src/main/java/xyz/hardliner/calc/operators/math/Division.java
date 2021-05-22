@@ -1,10 +1,14 @@
 package xyz.hardliner.calc.operators.math;
 
+import lombok.EqualsAndHashCode;
+
 import java.math.BigDecimal;
 import java.util.function.BiFunction;
 
+import static java.math.MathContext.DECIMAL64;
 import static xyz.hardliner.calc.utils.Operators.DIVISION;
 
+@EqualsAndHashCode
 public class Division implements BinaryMathematicalOperator {
 
     @Override
@@ -14,6 +18,6 @@ public class Division implements BinaryMathematicalOperator {
 
     @Override
     public BiFunction<BigDecimal, BigDecimal, BigDecimal> numericBinaryFunction() {
-        return BigDecimal::divide;
+        return (dividend, divisor) -> dividend.divide(divisor, DECIMAL64);
     }
 }

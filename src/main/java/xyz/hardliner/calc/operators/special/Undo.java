@@ -1,5 +1,6 @@
 package xyz.hardliner.calc.operators.special;
 
+import lombok.EqualsAndHashCode;
 import org.apache.commons.lang3.tuple.Pair;
 import xyz.hardliner.calc.exception.NonApplicableOperation;
 import xyz.hardliner.calc.operands.Operand;
@@ -17,6 +18,7 @@ import static xyz.hardliner.calc.service.ApplicableCheck.successfulCheck;
 import static xyz.hardliner.calc.utils.Operators.UNDO;
 import static xyz.hardliner.calc.utils.StackUtils.cloneStack;
 
+@EqualsAndHashCode
 public class Undo implements SpecialOperator {
 
     @Override

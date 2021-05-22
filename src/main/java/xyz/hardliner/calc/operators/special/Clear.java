@@ -1,5 +1,6 @@
 package xyz.hardliner.calc.operators.special;
 
+import lombok.EqualsAndHashCode;
 import xyz.hardliner.calc.service.ApplicableCheck;
 import xyz.hardliner.calc.service.Item;
 import xyz.hardliner.calc.service.ItemResolvingRule;
@@ -10,6 +11,7 @@ import java.util.function.Function;
 import static xyz.hardliner.calc.service.ApplicableCheck.successfulCheck;
 import static xyz.hardliner.calc.utils.Operators.CLEAR;
 
+@EqualsAndHashCode
 public class Clear implements SpecialOperator {
 
     @Override

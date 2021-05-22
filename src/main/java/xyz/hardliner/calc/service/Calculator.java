@@ -1,6 +1,8 @@
 package xyz.hardliner.calc.service;
 
 import xyz.hardliner.calc.exception.CalculatorException;
+import xyz.hardliner.calc.service.io.InputProvider;
+import xyz.hardliner.calc.service.io.OutputProvider;
 
 import java.util.Stack;
 import java.util.stream.Collectors;
@@ -8,13 +10,15 @@ import java.util.stream.Collectors;
 public class Calculator {
 
     private final InputProvider in;
+    private final OutputProvider out;
     private final Parser parser;
 
     private final Stack<Item> stack;
     private final Stack<Item> history;
 
-    public Calculator(InputProvider in, Parser parser) {
+    public Calculator(InputProvider in, OutputProvider out, Parser parser) {
         this.in = in;
+        this.out = out;
         this.parser = parser;
         stack = new Stack<>();
         history = new Stack<>();
@@ -31,9 +35,9 @@ public class Calculator {
                 }
             } catch (CalculatorException ex) {
                 final var errorMessage = ex.getMessage();
-                System.out.println(populatePositionPlaceholder(errorMessage, pointerPosition));
+                out.outputLine(populatePositionPlaceholder(errorMessage, pointerPosition));
             }
-            System.out.println("stack: " + print());
+            out.outputLine("stack: " + print());
             line = in.nextLine();
         }
     }

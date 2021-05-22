@@ -1,4 +1,4 @@
-package xyz.hardliner.calc.service;
+package xyz.hardliner.calc.service.io;
 
 public interface InputProvider {
 

@@ -1,8 +1,8 @@
-package xyz.hardliner.calc.service;
+package xyz.hardliner.calc.service.io;
 
 import java.util.Scanner;
 
-public class CLIInputProvider implements InputProvider {
+public class CLIInput implements InputProvider {
 
     Scanner in = new Scanner(System.in);
 

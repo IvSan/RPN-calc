@@ -1,5 +1,6 @@
 package xyz.hardliner.calc.operators.math;
 
+import lombok.EqualsAndHashCode;
 import xyz.hardliner.calc.operands.NumericOperand;
 import xyz.hardliner.calc.service.ApplicableCheck;
 import xyz.hardliner.calc.service.Item;
@@ -15,6 +16,7 @@ import static xyz.hardliner.calc.service.ApplicableCheck.successfulCheck;
 import static xyz.hardliner.calc.utils.Operators.SQUARE_ROOT;
 import static xyz.hardliner.calc.utils.StackUtils.cloneStack;
 
+@EqualsAndHashCode
 public class SquareRoot implements UnaryMathematicalOperator {
 
     @Override

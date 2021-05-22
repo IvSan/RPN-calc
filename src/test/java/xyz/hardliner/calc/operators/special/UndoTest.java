@@ -13,7 +13,7 @@ import static xyz.hardliner.calc.TestUtils.calculator;
 public class UndoTest {
 
     @Test
-    public void plain_operand_undo() {
+    public void should_undo_plain_operand() {
         final var calc = calculator();
 
         calc
@@ -41,7 +41,7 @@ public class UndoTest {
     }
 
     @Test
-    public void unary_operator_undo() {
+    public void should_undo_unary_operator() {
         final var calc = calculator();
 
         calc
@@ -69,7 +69,7 @@ public class UndoTest {
     }
 
     @Test
-    public void binary_operator_undo() {
+    public void should_undo_binary_operator() {
         final var calc = calculator();
 
         calc
@@ -99,7 +99,7 @@ public class UndoTest {
     }
 
     @Test
-    public void mixed_undo() {
+    public void should_undo_mixed_operators() {
         final var calc = calculator();
 
         calc
@@ -151,7 +151,7 @@ public class UndoTest {
     }
 
     @Test
-    public void undo_nothing() {
+    public void should_undo_nothing() {
         final var calc = calculator();
 
         calc.process(new NumericOperand("10"));
