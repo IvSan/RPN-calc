@@ -19,12 +19,12 @@ public class SquareRootTest {
 
         calc.process(new SquareRoot());
 
-        assertEquals("3.9434756244", calc.print());
+        assertEquals("3.9434756243", calc.print());
         assertEquals("15.551 sqrt", calc.printHistory());
 
         calc.process(new SquareRoot());
 
-        assertEquals("1.9858186283", calc.print());
+        assertEquals("1.9858186282", calc.print());
         assertEquals("15.551 sqrt sqrt", calc.printHistory());
     }
 

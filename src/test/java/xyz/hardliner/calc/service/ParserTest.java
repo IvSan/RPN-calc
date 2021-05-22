@@ -13,6 +13,7 @@ import xyz.hardliner.calc.operators.special.Undo;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ParserTest {
 
@@ -37,6 +38,23 @@ public class ParserTest {
         );
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void should_raise_error() {
+        final var sut = new Parser();
+        final var line = "1-";
+
+        Exception expected = null;
+
+        try {
+            sut.parseLine(line);
+        } catch (Exception ex) {
+            expected = ex;
+        }
+
+        assertNotNull(expected);
+        assertEquals("unrecognized operator: '1-'", expected.getMessage());
     }
 
 }

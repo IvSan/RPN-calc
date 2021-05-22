@@ -53,7 +53,7 @@ public class CalculatorTest {
 
         verify(in, times(3)).nextLine();
         verify(parser, times(2)).parseLine(any(String.class));
-        verify(out, times(1)).outputLine(eq("stack: 3.0822070015"));
+        verify(out, times(1)).outputLine(eq("stack: 3.0822070014"));
         verify(out, times(1)).outputLine(eq("stack: 12.3288280059"));
         verifyNoMoreInteractions(in, out, parser);
     }

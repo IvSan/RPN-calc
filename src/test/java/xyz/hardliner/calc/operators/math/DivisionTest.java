@@ -27,7 +27,7 @@ public class DivisionTest {
 
         calc.process(new Division());
 
-        assertEquals("52.0866825285", calc.print());
+        assertEquals("52.0866825284", calc.print());
         assertEquals("81 15.551 10 / /", calc.printHistory());
     }
 

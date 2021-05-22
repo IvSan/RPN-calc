@@ -3,12 +3,17 @@ package xyz.hardliner.calc.operands;
 import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 @EqualsAndHashCode
 public class NumericOperand implements Operand {
 
     public static final DecimalFormat NUMBERS_FORMAT = new DecimalFormat("0.##########");
+
+    static {
+        NUMBERS_FORMAT.setRoundingMode(RoundingMode.DOWN);
+    }
 
     public BigDecimal number;
 
