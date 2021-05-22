@@ -28,7 +28,7 @@ public interface BinaryMathematicalOperator extends MathematicalOperator {
                 );
             } else {
                 throw new NonApplicableOperation(
-                    format("operator '%s': cannot apply to '%s' and '%s'", print(), first.print(), second.print())
+                    format("operator '%s' (position: %%pos): cannot apply to '%s' and '%s'", print(), first.print(), second.print())
                 );
             }
         };

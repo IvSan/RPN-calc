@@ -25,7 +25,7 @@ public interface UnaryMathematicalOperator extends MathematicalOperator {
                 );
             } else {
                 throw new NonApplicableOperation(
-                    format("operator '%s': cannot apply to '%s'", print(), num.print())
+                    format("operator '%s' (position: %%pos): cannot apply to '%s'", print(), num.print())
                 );
             }
         };

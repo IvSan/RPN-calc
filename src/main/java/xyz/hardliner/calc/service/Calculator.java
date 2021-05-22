@@ -23,12 +23,15 @@ public class Calculator {
     public void run() {
         var line = in.nextLine();
         while (!"exit".equals(line)) {
+            var pointerPosition = 1;
             try {
                 for (Item item : parser.parseLine(line)) {
                     process(item);
+                    pointerPosition += item.print().length() + 1;
                 }
             } catch (CalculatorException ex) {
-                System.out.println(ex.getMessage());
+                final var errorMessage = ex.getMessage();
+                System.out.println(populatePositionPlaceholder(errorMessage, pointerPosition));
             }
             System.out.println("stack: " + print());
             line = in.nextLine();
@@ -46,5 +49,9 @@ public class Calculator {
 
     public String printHistory() {
         return history.stream().map(Item::print).collect(Collectors.joining(" "));
+    }
+
+    private String populatePositionPlaceholder(String errorMessage, int pointerPosition) {
+        return errorMessage.replaceFirst("%pos", Integer.toString(pointerPosition));
     }
 }

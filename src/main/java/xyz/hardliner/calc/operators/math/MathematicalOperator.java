@@ -66,7 +66,7 @@ public interface MathematicalOperator extends Operator {
             }
 
             return failedCheck(
-                format("operator '%s' (position: %d): insufficient parameters", print(), actualStack.size() + 1)
+                format("operator '%s' (position: %%pos): insufficient parameters", print())
             );
         };
     }

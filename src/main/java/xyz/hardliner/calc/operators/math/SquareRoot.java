@@ -45,7 +45,7 @@ public class SquareRoot implements UnaryMathematicalOperator {
                 return successfulCheck();
             }
             return failedCheck(
-                format("operator '%s' (position: %d): cannot apply to '%s'", print(), actualStack.size() + 1, topItem.print())
+                format("operator '%s' (position: %%pos): cannot apply to '%s'", print(), topItem.print())
             );
         };
     }
