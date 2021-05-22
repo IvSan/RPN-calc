@@ -1,16 +1,38 @@
 package xyz.hardliner.calc.service;
 
+import xyz.hardliner.calc.exception.CalculatorException;
+
 import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class Calculator {
 
-    public final Stack<Item> stack;
-    public final Stack<Item> history;
+    private final InputProvider in;
+    private final Parser parser;
 
-    public Calculator() {
+    private final Stack<Item> stack;
+    private final Stack<Item> history;
+
+    public Calculator(InputProvider in, Parser parser) {
+        this.in = in;
+        this.parser = parser;
         stack = new Stack<>();
         history = new Stack<>();
+    }
+
+    public void run() {
+        var line = in.nextLine();
+        while (!"exit".equals(line)) {
+            try {
+                for (Item item : parser.parseLine(line)) {
+                    process(item);
+                }
+            } catch (CalculatorException ex) {
+                System.out.println(ex.getMessage());
+            }
+            System.out.println("stack: " + print());
+            line = in.nextLine();
+        }
     }
 
     public Calculator process(Item item) {

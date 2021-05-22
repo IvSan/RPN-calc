@@ -6,15 +6,15 @@ import xyz.hardliner.calc.operators.math.Addition;
 import xyz.hardliner.calc.operators.math.Multiplication;
 import xyz.hardliner.calc.operators.math.SquareRoot;
 import xyz.hardliner.calc.operators.math.Subtraction;
-import xyz.hardliner.calc.service.Calculator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static xyz.hardliner.calc.TestUtils.calculator;
 
 public class UndoTest {
 
     @Test
     public void plain_operand_undo() {
-        final var calc = new Calculator();
+        final var calc = calculator();
 
         calc
             .process(new NumericOperand("81"))
@@ -42,7 +42,7 @@ public class UndoTest {
 
     @Test
     public void unary_operator_undo() {
-        final var calc = new Calculator();
+        final var calc = calculator();
 
         calc
             .process(new NumericOperand("81"))
@@ -70,7 +70,7 @@ public class UndoTest {
 
     @Test
     public void binary_operator_undo() {
-        final var calc = new Calculator();
+        final var calc = calculator();
 
         calc
             .process(new NumericOperand("4"))
@@ -100,7 +100,7 @@ public class UndoTest {
 
     @Test
     public void mixed_undo() {
-        final var calc = new Calculator();
+        final var calc = calculator();
 
         calc
             .process(new NumericOperand("10"))
@@ -152,7 +152,7 @@ public class UndoTest {
 
     @Test
     public void undo_nothing() {
-        final var calc = new Calculator();
+        final var calc = calculator();
 
         calc.process(new NumericOperand("10"));
 
