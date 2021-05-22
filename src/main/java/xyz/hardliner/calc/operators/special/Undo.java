@@ -33,28 +33,26 @@ public class Undo implements SpecialOperator {
 
     @Override
     public ItemResolvingRule resolvingRule() {
-        return new ItemResolvingRule(
-            item -> item instanceof Undo,
-            (item, state) -> {
-                final var stack = state.getLeft();
-                final var history = state.getRight();
+        return new ItemResolvingRule((item, state) -> {
+            final var stack = state.getLeft();
+            final var history = state.getRight();
 
-                if (history.empty()) return; // nothing to undo
+            if (history.empty()) return; // nothing to undo
 
-                final var itemToUndo = history.pop();
-                stack.pop();
+            final var itemToUndo = history.pop();
+            stack.pop();
 
-                if (itemToUndo instanceof Operand) return;
-                else if (itemToUndo instanceof UnaryMathematicalOperator) {
-                    stack.push(unpackItem(cloneStack(history)));
-                } else if (itemToUndo instanceof BinaryMathematicalOperator) {
-                    final var pair = unpackBinaryOperation(cloneStack(history));
-                    stack.push(pair.getLeft());
-                    stack.push(pair.getRight());
-                } else {
-                    throw new NonApplicableOperation("Undo operation hasn't been implemented for " + itemToUndo.print());
-                }
-            });
+            if (itemToUndo instanceof Operand) return;
+            else if (itemToUndo instanceof UnaryMathematicalOperator) {
+                stack.push(unpackItem(cloneStack(history)));
+            } else if (itemToUndo instanceof BinaryMathematicalOperator) {
+                final var pair = unpackBinaryOperation(cloneStack(history));
+                stack.push(pair.getLeft());
+                stack.push(pair.getRight());
+            } else {
+                throw new NonApplicableOperation("Undo operation hasn't been implemented for " + itemToUndo.print());
+            }
+        });
     }
 
     private Pair<Item, Item> unpackBinaryOperation(Stack<Item> history) {

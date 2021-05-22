@@ -9,7 +9,8 @@ public class App {
 
     public static void main(String[] args) {
         final var calc = new Calculator(new CLIInput(), new CLIOutput(), new Parser());
-        calc.run();
+        Thread calculation = new Thread(calc);
+        calculation.start();
     }
 
 }

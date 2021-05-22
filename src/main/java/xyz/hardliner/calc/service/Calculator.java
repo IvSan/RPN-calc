@@ -7,7 +7,10 @@ import xyz.hardliner.calc.service.io.OutputProvider;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
-public class Calculator {
+/**
+ * Core logic entity with it's state, which contain actual operational stack and historical stack of instructions.
+ */
+public class Calculator implements Runnable {
 
     private final InputProvider in;
     private final OutputProvider out;
@@ -42,15 +45,27 @@ public class Calculator {
         }
     }
 
+    /**
+     * Make {@link Calculator} process next input {@link Item}.
+     *
+     * @param item - input.
+     * @return - itself with new state.
+     */
     public Calculator process(Item item) {
         item.resolvingRule().apply(item, stack, history);
         return this;
     }
 
+    /**
+     * @return - String representation of actual operational stack.
+     */
     public String print() {
         return stack.stream().map(Item::print).collect(Collectors.joining(" "));
     }
 
+    /**
+     * @return - String representation of historical stack of instructions.
+     */
     public String printHistory() {
         return history.stream().map(Item::print).collect(Collectors.joining(" "));
     }

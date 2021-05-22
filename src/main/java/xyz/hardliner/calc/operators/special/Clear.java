@@ -26,12 +26,10 @@ public class Clear implements SpecialOperator {
 
     @Override
     public ItemResolvingRule resolvingRule() {
-        return new ItemResolvingRule(
-            item -> item instanceof Clear,
-            (item, state) -> {
-                state.getLeft().clear();
-                state.getRight().clear();
-            });
+        return new ItemResolvingRule((item, state) -> {
+            state.getLeft().clear();
+            state.getRight().clear();
+        });
     }
 
 }

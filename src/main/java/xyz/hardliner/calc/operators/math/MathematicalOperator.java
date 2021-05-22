@@ -28,27 +28,25 @@ public interface MathematicalOperator extends Operator {
     }
 
     default ItemResolvingRule resolvingRule() {
-        return new ItemResolvingRule(
-            item -> item instanceof MathematicalOperator,
-            (item, state) -> {
-                final var stack = state.getLeft();
-                final var history = state.getRight();
-                final var mathOperator = (MathematicalOperator) item;
+        return new ItemResolvingRule((item, state) -> {
+            final var stack = state.getLeft();
+            final var history = state.getRight();
+            final var mathOperator = (MathematicalOperator) item;
 
-                final var check = applicableChecker().apply(stack);
-                if (check.isFail()) {
-                    throw new NonApplicableOperation(check.getFailMessage());
-                }
+            final var check = applicableChecker().apply(stack);
+            if (check.isFail()) {
+                throw new NonApplicableOperation(check.getFailMessage());
+            }
 
-                final var operands = new ArrayList<Operand>();
-                for (int i = 0; i < mathOperator.arity(); i++) {
-                    final var operand = stack.pop();
-                    operands.add((Operand) operand);
-                }
+            final var operands = new ArrayList<Operand>();
+            for (int i = 0; i < mathOperator.arity(); i++) {
+                final var operand = stack.pop();
+                operands.add((Operand) operand);
+            }
 
-                stack.push(mathOperator.effect().apply(operands));
-                history.push(mathOperator);
-            });
+            stack.push(mathOperator.effect().apply(operands));
+            history.push(mathOperator);
+        });
     }
 
     default Function<Stack<Item>, ApplicableCheck> availableOperandsNumberChecker() {
