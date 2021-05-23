@@ -10,7 +10,7 @@ import static xyz.hardliner.calc.utils.Operators.parseOperator;
 public class Parser {
 
     public List<Item> parseLine(String line) {
-        String[] rawItems = line.split(" ");
+        String[] rawItems = line.trim().replaceAll(" +", " ").split(" ");
         List<Item> result = new ArrayList<>();
 
         for (String rawItem : rawItems) {

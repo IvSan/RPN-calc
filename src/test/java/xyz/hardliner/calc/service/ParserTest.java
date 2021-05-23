@@ -54,7 +54,7 @@ public class ParserTest {
         }
 
         assertNotNull(expected);
-        assertEquals("unrecognized operator: '1-'", expected.getMessage());
+        assertEquals("operator '1-': unrecognized operator", expected.getMessage());
     }
 
 }

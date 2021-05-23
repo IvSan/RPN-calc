@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id "com.github.johnrengelman.shadow" version "7.0.0"
 }
 
 sourceCompatibility = 11
@@ -19,6 +20,14 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testImplementation 'org.mockito:mockito-all:2.0.2-beta'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'xyz.hardliner.calc.App'
+        )
+    }
 }
 
 test {

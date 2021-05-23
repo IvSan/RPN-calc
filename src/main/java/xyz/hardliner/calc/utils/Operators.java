@@ -35,7 +35,7 @@ public enum Operators {
 
     public static Operator parseOperator(String alias) {
         final var operator = stream(Operators.values()).filter(a -> a.alias.equals(alias)).findFirst()
-            .orElseThrow(() -> new NonApplicableOperation(format("unrecognized operator: '%s'", alias)));
+            .orElseThrow(() -> new NonApplicableOperation(format("operator '%s': unrecognized operator", alias)));
         return operator.operatorGenerator.get();
     }
 }
