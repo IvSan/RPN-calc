@@ -7,8 +7,8 @@ import xyz.hardliner.calc.service.dto.CalculationStatus;
 import xyz.hardliner.calc.utils.Counter;
 import xyz.hardliner.calc.utils.Operators;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 import java.util.function.Function;
@@ -27,7 +27,7 @@ public class Calculator {
 
     public Calculator(Parser parser) {
         this.parser = parser;
-        items = new ArrayList<>();
+        items = new LinkedList<>();
     }
 
     /**

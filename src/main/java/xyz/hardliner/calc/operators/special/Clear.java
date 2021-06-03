@@ -5,7 +5,7 @@ import xyz.hardliner.calc.operands.Operand;
 import xyz.hardliner.calc.service.ApplicableCheck;
 import xyz.hardliner.calc.service.Item;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 import java.util.function.Function;
@@ -28,7 +28,7 @@ public class Clear implements SpecialOperator {
 
     public static Function<List<Item>, List<Item>> clearResolvingRule() {
         return items -> {
-            var itemsEffectiveCopy = new ArrayList<Item>();
+            var itemsEffectiveCopy = new LinkedList<Item>();
             for (Item item : items) {
                 if (item instanceof Clear) {
                     itemsEffectiveCopy.clear();

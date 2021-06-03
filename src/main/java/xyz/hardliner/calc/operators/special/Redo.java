@@ -5,7 +5,7 @@ import xyz.hardliner.calc.operands.Operand;
 import xyz.hardliner.calc.service.ApplicableCheck;
 import xyz.hardliner.calc.service.Item;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 import java.util.function.Function;
@@ -28,11 +28,11 @@ public class Redo implements SpecialOperator {
 
     public static Function<List<Item>, List<Item>> redoResolvingRule() {
         return items -> {
-            var itemsEffectiveCopy = new ArrayList<Item>();
+            var itemsEffectiveCopy = new LinkedList<Item>();
             for (int i = 0; i < items.size(); i++) {
                 if (i > 0 && items.get(i) instanceof Redo) {
-                    if (itemsEffectiveCopy.get(itemsEffectiveCopy.size() - 1) instanceof Undo) {
-                        itemsEffectiveCopy.remove(itemsEffectiveCopy.size() - 1);
+                    if (itemsEffectiveCopy.getLast() instanceof Undo) {
+                        itemsEffectiveCopy.removeLast();
                     }
                 } else itemsEffectiveCopy.add(items.get(i));
             }
