@@ -67,7 +67,7 @@ public class Calculator {
     }
 
     /**
-     * @return - Result of stack calculation.
+     * @return - Result of calculation performed over the stack.
      */
     public CalculationResult getResult() {
         var itemsEffectiveCopy = List.copyOf(items);
@@ -90,7 +90,7 @@ public class Calculator {
     }
 
     /**
-     * @return - String representation of actual operational stack.
+     * @return - String representation of calculation performed over the stack.
      */
     public String print() {
         final var calcResult = getResult();
