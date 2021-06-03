@@ -13,17 +13,17 @@ public class ClearTest {
         final var calc = calculator();
 
         calc
-            .process(new NumericOperand("81"))
-            .process(new NumericOperand("15.5"))
-            .process(new NumericOperand("10"));
+            .add(new NumericOperand("81"))
+            .add(new NumericOperand("15.5"))
+            .add(new NumericOperand("10"));
 
-        assertEquals("81 15.5 10", calc.print());
+        assertEquals("stack: 81 15.5 10", calc.print());
         assertEquals("81 15.5 10", calc.printHistory());
 
-        calc.process(new Clear());
+        calc.add(new Clear());
 
-        assertEquals("", calc.print());
-        assertEquals("", calc.printHistory());
+        assertEquals("stack: ", calc.print());
+        assertEquals("81 15.5 10 clear", calc.printHistory());
     }
 
 }

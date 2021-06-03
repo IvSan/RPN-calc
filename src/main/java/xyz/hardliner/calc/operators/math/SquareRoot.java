@@ -2,8 +2,8 @@ package xyz.hardliner.calc.operators.math;
 
 import lombok.EqualsAndHashCode;
 import xyz.hardliner.calc.operands.NumericOperand;
+import xyz.hardliner.calc.operands.Operand;
 import xyz.hardliner.calc.service.ApplicableCheck;
-import xyz.hardliner.calc.service.Item;
 
 import java.math.BigDecimal;
 import java.util.Stack;
@@ -25,7 +25,7 @@ public class SquareRoot implements UnaryMathematicalOperator {
     }
 
     @Override
-    public Function<Stack<Item>, ApplicableCheck> applicableChecker() {
+    public Function<Stack<Operand>, ApplicableCheck> applicableChecker() {
         return stack -> {
             final var operandsNumberCheck = availableOperandsNumberChecker().apply(stack);
             if (operandsNumberCheck.isFail()) {
@@ -40,10 +40,10 @@ public class SquareRoot implements UnaryMathematicalOperator {
         return num -> num.sqrt(DECIMAL64);
     }
 
-    private Function<Stack<Item>, ApplicableCheck> positiveNumberChecker() {
+    private Function<Stack<Operand>, ApplicableCheck> positiveNumberChecker() {
         return actualStack -> {
             final var topItem = cloneStack(actualStack).pop();
-            if ((topItem instanceof NumericOperand) && ((NumericOperand) topItem).number.doubleValue() >= 0) {
+            if ((topItem instanceof NumericOperand) && ((NumericOperand) topItem).number.compareTo(BigDecimal.ZERO) >= 0) {
                 return successfulCheck();
             }
             return failedCheck(

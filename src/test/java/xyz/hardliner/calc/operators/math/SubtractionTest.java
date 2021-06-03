@@ -13,21 +13,21 @@ public class SubtractionTest {
         final var calc = calculator();
 
         calc
-            .process(new NumericOperand("81"))
-            .process(new NumericOperand("15.551"))
-            .process(new NumericOperand("10"));
+            .add(new NumericOperand("81"))
+            .add(new NumericOperand("15.551"))
+            .add(new NumericOperand("10"));
 
-        assertEquals("81 15.551 10", calc.print());
+        assertEquals("stack: 81 15.551 10", calc.print());
         assertEquals("81 15.551 10", calc.printHistory());
 
-        calc.process(new Subtraction());
+        calc.add(new Subtraction());
 
-        assertEquals("81 5.551", calc.print());
+        assertEquals("stack: 81 5.551", calc.print());
         assertEquals("81 15.551 10 -", calc.printHistory());
 
-        calc.process(new Subtraction());
+        calc.add(new Subtraction());
 
-        assertEquals("75.449", calc.print());
+        assertEquals("stack: 75.449", calc.print());
         assertEquals("81 15.551 10 - -", calc.printHistory());
     }
 

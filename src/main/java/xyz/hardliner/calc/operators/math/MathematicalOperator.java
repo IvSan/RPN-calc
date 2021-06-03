@@ -4,7 +4,6 @@ import xyz.hardliner.calc.exception.NonApplicableOperation;
 import xyz.hardliner.calc.operands.Operand;
 import xyz.hardliner.calc.operators.Operator;
 import xyz.hardliner.calc.service.ApplicableCheck;
-import xyz.hardliner.calc.service.Item;
 import xyz.hardliner.calc.service.ItemResolvingRule;
 
 import java.util.ArrayList;
@@ -23,14 +22,12 @@ public interface MathematicalOperator extends Operator {
 
     Function<List<Operand>, Operand> effect();
 
-    default Function<Stack<Item>, ApplicableCheck> applicableChecker() {
+    default Function<Stack<Operand>, ApplicableCheck> applicableChecker() {
         return availableOperandsNumberChecker();
     }
 
     default ItemResolvingRule resolvingRule() {
-        return new ItemResolvingRule((item, state) -> {
-            final var stack = state.getLeft();
-            final var history = state.getRight();
+        return new ItemResolvingRule((item, stack) -> {
             final var mathOperator = (MathematicalOperator) item;
 
             final var check = applicableChecker().apply(stack);
@@ -41,25 +38,23 @@ public interface MathematicalOperator extends Operator {
             final var operands = new ArrayList<Operand>();
             for (int i = 0; i < mathOperator.arity(); i++) {
                 final var operand = stack.pop();
-                operands.add((Operand) operand);
+                operands.add(operand);
             }
 
             stack.push(mathOperator.effect().apply(operands));
-            history.push(mathOperator);
         });
     }
 
-    default Function<Stack<Item>, ApplicableCheck> availableOperandsNumberChecker() {
+    default Function<Stack<Operand>, ApplicableCheck> availableOperandsNumberChecker() {
         return actualStack -> {
             var inputsCounter = 0;
             final var stack = cloneStack(actualStack);
 
             while (!stack.empty()) {
-                if (stack.pop() instanceof Operand) {
-                    inputsCounter++;
-                    if (inputsCounter >= arity()) {
-                        return successfulCheck();
-                    }
+                stack.pop();
+                inputsCounter++;
+                if (inputsCounter >= arity()) {
+                    return successfulCheck();
                 }
             }
 

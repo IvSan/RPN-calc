@@ -13,21 +13,21 @@ public class MultiplicationTest {
         final var calc = calculator();
 
         calc
-            .process(new NumericOperand("81"))
-            .process(new NumericOperand("15.551"))
-            .process(new NumericOperand("10"));
+            .add(new NumericOperand("81"))
+            .add(new NumericOperand("15.551"))
+            .add(new NumericOperand("10"));
 
-        assertEquals("81 15.551 10", calc.print());
+        assertEquals("stack: 81 15.551 10", calc.print());
         assertEquals("81 15.551 10", calc.printHistory());
 
-        calc.process(new Multiplication());
+        calc.add(new Multiplication());
 
-        assertEquals("81 155.51", calc.print());
+        assertEquals("stack: 81 155.51", calc.print());
         assertEquals("81 15.551 10 *", calc.printHistory());
 
-        calc.process(new Multiplication());
+        calc.add(new Multiplication());
 
-        assertEquals("12596.31", calc.print());
+        assertEquals("stack: 12596.31", calc.print());
         assertEquals("81 15.551 10 * *", calc.printHistory());
     }
 

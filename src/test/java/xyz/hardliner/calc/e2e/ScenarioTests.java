@@ -4,125 +4,74 @@ import org.junit.jupiter.api.Test;
 import xyz.hardliner.calc.service.Calculator;
 import xyz.hardliner.calc.service.Parser;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ScenarioTests {
 
     @Test
     public void scenario_1() {
-        final var in = new TestInput();
-        final var out = new TestOutput();
-
-        in.addInput("5 2");
-        final var sut = new Calculator(in, out, new Parser());
-
-        sut.run();
-
-        assertEquals(List.of("stack: 5 2"), out.getOutputs());
+        final var sut = new Calculator(new Parser());
+        assertEquals("stack: 5 2", sut.calculate("5 2"));
     }
 
     @Test
     public void scenario_2() {
-        final var in = new TestInput();
-        final var out = new TestOutput();
+        final var sut = new Calculator(new Parser());
 
-        in.addInput("2 sqrt");
-        in.addInput("clear 9 sqrt");
-        final var sut = new Calculator(in, out, new Parser());
-
-        sut.run();
-
-        assertEquals(List.of("stack: 1.4142135623", "stack: 3"), out.getOutputs());
+        assertEquals("stack: 1.4142135623", sut.calculate("2 sqrt"));
+        assertEquals("stack: 3", sut.calculate("clear 9 sqrt"));
     }
 
     @Test
     public void scenario_3() {
-        final var in = new TestInput();
-        final var out = new TestOutput();
+        final var sut = new Calculator(new Parser());
 
-        in.addInput("5 2 -");
-        in.addInput("3 -");
-        in.addInput("clear");
-        final var sut = new Calculator(in, out, new Parser());
-
-        sut.run();
-
-        assertEquals(List.of("stack: 3", "stack: 0", "stack: "), out.getOutputs());
+        assertEquals("stack: 3", sut.calculate("5 2 -"));
+        assertEquals("stack: 0", sut.calculate("3 -"));
+        assertEquals("stack: ", sut.calculate("clear"));
     }
 
     @Test
     public void scenario_4() {
-        final var in = new TestInput();
-        final var out = new TestOutput();
+        final var sut = new Calculator(new Parser());
 
-        in.addInput("5 4 3 2");
-        in.addInput("undo undo *");
-        in.addInput("5 *");
-        in.addInput("undo");
-        final var sut = new Calculator(in, out, new Parser());
-
-        sut.run();
-
-        assertEquals(List.of("stack: 5 4 3 2", "stack: 20", "stack: 100", "stack: 20 5"), out.getOutputs());
+        assertEquals("stack: 5 4 3 2", sut.calculate("5 4 3 2"));
+        assertEquals("stack: 20", sut.calculate("undo undo *"));
+        assertEquals("stack: 100", sut.calculate("5 *"));
+        assertEquals("stack: 20 5", sut.calculate("undo"));
     }
 
     @Test
     public void scenario_5() {
-        final var in = new TestInput();
-        final var out = new TestOutput();
+        final var sut = new Calculator(new Parser());
 
-        in.addInput("7 12 2 /");
-        in.addInput("*");
-        in.addInput("4 /");
-        final var sut = new Calculator(in, out, new Parser());
-
-        sut.run();
-
-        assertEquals(List.of("stack: 7 6", "stack: 42", "stack: 10.5"), out.getOutputs());
+        assertEquals("stack: 7 6", sut.calculate("7 12 2 /"));
+        assertEquals("stack: 42", sut.calculate("*"));
+        assertEquals("stack: 10.5", sut.calculate("4 /"));
     }
 
     @Test
     public void scenario_6() {
-        final var in = new TestInput();
-        final var out = new TestOutput();
+        final var sut = new Calculator(new Parser());
 
-        in.addInput("1 2 3 4 5");
-        in.addInput("*");
-        in.addInput("clear 3 4 -");
-        final var sut = new Calculator(in, out, new Parser());
-
-        sut.run();
-
-        assertEquals(List.of("stack: 1 2 3 4 5", "stack: 1 2 3 20", "stack: -1"), out.getOutputs());
+        assertEquals("stack: 1 2 3 4 5", sut.calculate("1 2 3 4 5"));
+        assertEquals("stack: 1 2 3 20", sut.calculate("*"));
+        assertEquals("stack: -1", sut.calculate("clear 3 4 -"));
     }
 
     @Test
     public void scenario_7() {
-        final var in = new TestInput();
-        final var out = new TestOutput();
+        final var sut = new Calculator(new Parser());
 
-        in.addInput("1 2 3 4 5");
-        in.addInput("* * * *");
-        final var sut = new Calculator(in, out, new Parser());
-
-        sut.run();
-
-        assertEquals(List.of("stack: 1 2 3 4 5", "stack: 120"), out.getOutputs());
+        assertEquals("stack: 1 2 3 4 5", sut.calculate("1 2 3 4 5"));
+        assertEquals("stack: 120", sut.calculate("* * * *"));
     }
 
     @Test
     public void scenario_8() {
-        final var in = new TestInput();
-        final var out = new TestOutput();
+        final var sut = new Calculator(new Parser());
 
-        in.addInput("1 2 3 * 5 + * * 6 5");
-        final var sut = new Calculator(in, out, new Parser());
-
-        sut.run();
-
-        assertEquals(List.of("operator '*' (position: 15): insufficient parameters", "stack: 11"), out.getOutputs());
+        assertEquals("operator '*' (position: 15): insufficient parameters\nstack: 11", sut.calculate("1 2 3 * 5 + * * 6 5"));
     }
 
 }

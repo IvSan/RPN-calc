@@ -7,11 +7,10 @@ import xyz.hardliner.calc.operators.math.Addition;
 import xyz.hardliner.calc.operators.math.Multiplication;
 import xyz.hardliner.calc.operators.math.SquareRoot;
 import xyz.hardliner.calc.operators.math.Subtraction;
-import xyz.hardliner.calc.service.io.InputProvider;
-import xyz.hardliner.calc.service.io.OutputProvider;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -23,13 +22,11 @@ import static org.mockito.Mockito.when;
 
 public class CalculatorTest {
 
-    private final InputProvider in = mock(InputProvider.class);
-    private final OutputProvider out = mock(OutputProvider.class);
     private final Parser parser = mock(Parser.class);
 
     @BeforeEach
     public void setup() {
-        reset(in, out, parser);
+        reset(parser);
     }
 
     @Test
@@ -46,22 +43,19 @@ public class CalculatorTest {
             new NumericOperand("4"),
             new Multiplication()
         ));
-        when(in.nextLine()).thenReturn(inputFirst).thenReturn(inputSecond).thenReturn("exit");
 
-        final var sut = new Calculator(in, out, parser);
-        sut.run();
+        final var sut = new Calculator(parser);
 
-        verify(in, times(3)).nextLine();
+        assertEquals("stack: 3.0822070014", sut.calculate(inputFirst));
+        assertEquals("stack: 12.3288280059", sut.calculate(inputSecond));
+
         verify(parser, times(2)).parseLine(any(String.class));
-        verify(out, times(1)).outputLine(eq("stack: 3.0822070014"));
-        verify(out, times(1)).outputLine(eq("stack: 12.3288280059"));
-        verifyNoMoreInteractions(in, out, parser);
+        verifyNoMoreInteractions(parser);
     }
 
     @Test
     public void should_handle_error() {
         final var input = "4.5 5 - sqrt";
-        when(in.nextLine()).thenReturn(input).thenReturn("exit");
         when(parser.parseLine(eq(input))).thenReturn(List.of(
             new NumericOperand("4.5"),
             new NumericOperand("5"),
@@ -69,13 +63,11 @@ public class CalculatorTest {
             new SquareRoot()
         ));
 
-        final var sut = new Calculator(in, out, parser);
-        sut.run();
+        final var sut = new Calculator(parser);
 
-        verify(in, times(2)).nextLine();
+        assertEquals("operator 'sqrt' (position: 9): cannot apply to '-0.5'\nstack: -0.5", sut.calculate(input));
+
         verify(parser, times(1)).parseLine(eq(input));
-        verify(out, times(1)).outputLine(eq("operator 'sqrt' (position: 9): cannot apply to '-0.5'"));
-        verify(out, times(1)).outputLine(eq("stack: -0.5"));
-        verifyNoMoreInteractions(in, out, parser);
+        verifyNoMoreInteractions(parser);
     }
 }

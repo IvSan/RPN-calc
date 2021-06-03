@@ -12,19 +12,19 @@ public class SquareRootTest {
     public void should_take_square_root() {
         final var calc = calculator();
 
-        calc.process(new NumericOperand("15.551"));
+        calc.add(new NumericOperand("15.551"));
 
-        assertEquals("15.551", calc.print());
+        assertEquals("stack: 15.551", calc.print());
         assertEquals("15.551", calc.printHistory());
 
-        calc.process(new SquareRoot());
+        calc.add(new SquareRoot());
 
-        assertEquals("3.9434756243", calc.print());
+        assertEquals("stack: 3.9434756243", calc.print());
         assertEquals("15.551 sqrt", calc.printHistory());
 
-        calc.process(new SquareRoot());
+        calc.add(new SquareRoot());
 
-        assertEquals("1.9858186282", calc.print());
+        assertEquals("stack: 1.9858186282", calc.print());
         assertEquals("15.551 sqrt sqrt", calc.printHistory());
     }
 

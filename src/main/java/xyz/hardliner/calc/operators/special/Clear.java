@@ -1,10 +1,12 @@
 package xyz.hardliner.calc.operators.special;
 
 import lombok.EqualsAndHashCode;
+import xyz.hardliner.calc.operands.Operand;
 import xyz.hardliner.calc.service.ApplicableCheck;
 import xyz.hardliner.calc.service.Item;
-import xyz.hardliner.calc.service.ItemResolvingRule;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 import java.util.function.Function;
 
@@ -20,16 +22,20 @@ public class Clear implements SpecialOperator {
     }
 
     @Override
-    public Function<Stack<Item>, ApplicableCheck> applicableChecker() {
+    public Function<Stack<Operand>, ApplicableCheck> applicableChecker() {
         return items -> successfulCheck();
     }
 
-    @Override
-    public ItemResolvingRule resolvingRule() {
-        return new ItemResolvingRule((item, state) -> {
-            state.getLeft().clear();
-            state.getRight().clear();
-        });
+    public static Function<List<Item>, List<Item>> clearResolvingRule() {
+        return items -> {
+            var itemsEffectiveCopy = new ArrayList<Item>();
+            for (Item item : items) {
+                if (item instanceof Clear) {
+                    itemsEffectiveCopy.clear();
+                } else itemsEffectiveCopy.add(item);
+            }
+            return itemsEffectiveCopy;
+        };
     }
 
 }

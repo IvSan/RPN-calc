@@ -17,27 +17,27 @@ public class UndoTest {
         final var calc = calculator();
 
         calc
-            .process(new NumericOperand("81"))
-            .process(new NumericOperand("15.5"))
-            .process(new NumericOperand("10"));
+            .add(new NumericOperand("81"))
+            .add(new NumericOperand("15.5"))
+            .add(new NumericOperand("10"));
 
-        assertEquals("81 15.5 10", calc.print());
+        assertEquals("stack: 81 15.5 10", calc.print());
         assertEquals("81 15.5 10", calc.printHistory());
 
-        calc.process(new Undo());
+        calc.add(new Undo());
 
-        assertEquals("81 15.5", calc.print());
-        assertEquals("81 15.5", calc.printHistory());
+        assertEquals("stack: 81 15.5", calc.print());
+        assertEquals("81 15.5 10 undo", calc.printHistory());
 
-        calc.process(new Undo());
+        calc.add(new Undo());
 
-        assertEquals("81", calc.print());
-        assertEquals("81", calc.printHistory());
+        assertEquals("stack: 81", calc.print());
+        assertEquals("81 15.5 10 undo undo", calc.printHistory());
 
-        calc.process(new Undo());
+        calc.add(new Undo());
 
-        assertEquals("", calc.print());
-        assertEquals("", calc.printHistory());
+        assertEquals("stack: ", calc.print());
+        assertEquals("81 15.5 10 undo undo undo", calc.printHistory());
     }
 
     @Test
@@ -45,27 +45,27 @@ public class UndoTest {
         final var calc = calculator();
 
         calc
-            .process(new NumericOperand("81"))
-            .process(new SquareRoot())
-            .process(new SquareRoot());
+            .add(new NumericOperand("81"))
+            .add(new SquareRoot())
+            .add(new SquareRoot());
 
-        assertEquals("3", calc.print());
+        assertEquals("stack: 3", calc.print());
         assertEquals("81 sqrt sqrt", calc.printHistory());
 
-        calc.process(new Undo());
+        calc.add(new Undo());
 
-        assertEquals("9", calc.print());
-        assertEquals("81 sqrt", calc.printHistory());
+        assertEquals("stack: 9", calc.print());
+        assertEquals("81 sqrt sqrt undo", calc.printHistory());
 
-        calc.process(new Undo());
+        calc.add(new Undo());
 
-        assertEquals("81", calc.print());
-        assertEquals("81", calc.printHistory());
+        assertEquals("stack: 81", calc.print());
+        assertEquals("81 sqrt sqrt undo undo", calc.printHistory());
 
-        calc.process(new Undo());
+        calc.add(new Undo());
 
-        assertEquals("", calc.print());
-        assertEquals("", calc.printHistory());
+        assertEquals("stack: ", calc.print());
+        assertEquals("81 sqrt sqrt undo undo undo", calc.printHistory());
     }
 
     @Test
@@ -73,29 +73,29 @@ public class UndoTest {
         final var calc = calculator();
 
         calc
-            .process(new NumericOperand("4"))
-            .process(new NumericOperand("3"))
-            .process(new NumericOperand("2"))
-            .process(new Subtraction())
-            .process(new Addition());
+            .add(new NumericOperand("4"))
+            .add(new NumericOperand("3"))
+            .add(new NumericOperand("2"))
+            .add(new Subtraction())
+            .add(new Addition());
 
-        assertEquals("5", calc.print());
+        assertEquals("stack: 5", calc.print());
         assertEquals("4 3 2 - +", calc.printHistory());
 
-        calc.process(new Undo());
+        calc.add(new Undo());
 
-        assertEquals("4 1", calc.print());
-        assertEquals("4 3 2 -", calc.printHistory());
+        assertEquals("stack: 4 1", calc.print());
+        assertEquals("4 3 2 - + undo", calc.printHistory());
 
-        calc.process(new Undo());
+        calc.add(new Undo());
 
-        assertEquals("4 3 2", calc.print());
-        assertEquals("4 3 2", calc.printHistory());
+        assertEquals("stack: 4 3 2", calc.print());
+        assertEquals("4 3 2 - + undo undo", calc.printHistory());
 
-        calc.process(new Undo());
+        calc.add(new Undo());
 
-        assertEquals("4 3", calc.print());
-        assertEquals("4 3", calc.printHistory());
+        assertEquals("stack: 4 3", calc.print());
+        assertEquals("4 3 2 - + undo undo undo", calc.printHistory());
     }
 
     @Test
@@ -103,71 +103,71 @@ public class UndoTest {
         final var calc = calculator();
 
         calc
-            .process(new NumericOperand("10"))
-            .process(new NumericOperand("9"))
-            .process(new SquareRoot())
-            .process(new Addition())
-            .process(new NumericOperand("4"))
-            .process(new SquareRoot())
-            .process(new Multiplication());
+            .add(new NumericOperand("10"))
+            .add(new NumericOperand("9"))
+            .add(new SquareRoot())
+            .add(new Addition())
+            .add(new NumericOperand("4"))
+            .add(new SquareRoot())
+            .add(new Multiplication());
 
-        assertEquals("26", calc.print());
+        assertEquals("stack: 26", calc.print());
         assertEquals("10 9 sqrt + 4 sqrt *", calc.printHistory());
 
-        calc.process(new Undo());
+        calc.add(new Undo());
 
-        assertEquals("13 2", calc.print());
-        assertEquals("10 9 sqrt + 4 sqrt", calc.printHistory());
+        assertEquals("stack: 13 2", calc.print());
+        assertEquals("10 9 sqrt + 4 sqrt * undo", calc.printHistory());
 
-        calc.process(new Undo());
+        calc.add(new Undo());
 
-        assertEquals("13 4", calc.print());
-        assertEquals("10 9 sqrt + 4", calc.printHistory());
+        assertEquals("stack: 13 4", calc.print());
+        assertEquals("10 9 sqrt + 4 sqrt * undo undo", calc.printHistory());
 
-        calc.process(new Undo());
+        calc.add(new Undo());
 
-        assertEquals("13", calc.print());
-        assertEquals("10 9 sqrt +", calc.printHistory());
+        assertEquals("stack: 13", calc.print());
+        assertEquals("10 9 sqrt + 4 sqrt * undo undo undo", calc.printHistory());
 
-        calc.process(new Undo());
+        calc.add(new Undo());
 
-        assertEquals("10 3", calc.print());
-        assertEquals("10 9 sqrt", calc.printHistory());
+        assertEquals("stack: 10 3", calc.print());
+        assertEquals("10 9 sqrt + 4 sqrt * undo undo undo undo", calc.printHistory());
 
-        calc.process(new Undo());
+        calc.add(new Undo());
 
-        assertEquals("10 9", calc.print());
-        assertEquals("10 9", calc.printHistory());
+        assertEquals("stack: 10 9", calc.print());
+        assertEquals("10 9 sqrt + 4 sqrt * undo undo undo undo undo", calc.printHistory());
 
-        calc.process(new Undo());
+        calc.add(new Undo());
 
-        assertEquals("10", calc.print());
-        assertEquals("10", calc.printHistory());
+        assertEquals("stack: 10", calc.print());
+        assertEquals("10 9 sqrt + 4 sqrt * undo undo undo undo undo undo", calc.printHistory());
 
-        calc.process(new Undo());
+        calc.add(new Undo());
 
-        assertEquals("", calc.print());
-        assertEquals("", calc.printHistory());
+        assertEquals("stack: ", calc.print());
+        assertEquals("10 9 sqrt + 4 sqrt * undo undo undo undo undo undo undo", calc.printHistory());
     }
 
     @Test
     public void should_undo_nothing() {
         final var calc = calculator();
 
-        calc.process(new NumericOperand("10"));
+        calc.add(new NumericOperand("10"));
 
-        assertEquals("10", calc.print());
+        assertEquals("stack: 10", calc.print());
         assertEquals("10", calc.printHistory());
 
-        calc.process(new Undo());
+        calc.add(new Undo());
 
-        assertEquals("", calc.print());
-        assertEquals("", calc.printHistory());
+        assertEquals("stack: ", calc.print());
+        assertEquals("10 undo", calc.printHistory());
 
-        calc.process(new Undo());
+        calc.add(new Undo());
 
-        assertEquals("", calc.print());
-        assertEquals("", calc.printHistory());
+        assertEquals("stack: ", calc.print());
+        assertEquals("10 undo undo", calc.printHistory());
     }
 
 }

@@ -11,14 +11,14 @@ import java.util.Stack;
 import java.util.function.Function;
 
 import static xyz.hardliner.calc.service.ApplicableCheck.successfulCheck;
-import static xyz.hardliner.calc.utils.Operators.UNDO;
+import static xyz.hardliner.calc.utils.Operators.REDO;
 
 @EqualsAndHashCode
-public class Undo implements SpecialOperator {
+public class Redo implements SpecialOperator {
 
     @Override
     public String print() {
-        return UNDO.alias;
+        return REDO.alias;
     }
 
     @Override
@@ -26,13 +26,15 @@ public class Undo implements SpecialOperator {
         return items -> successfulCheck();
     }
 
-    public static Function<List<Item>, List<Item>> undoResolvingRule() {
+    public static Function<List<Item>, List<Item>> redoResolvingRule() {
         return items -> {
             var itemsEffectiveCopy = new ArrayList<Item>();
-            for (Item item : items) {
-                if (!itemsEffectiveCopy.isEmpty() && item instanceof Undo) {
-                    itemsEffectiveCopy.remove(itemsEffectiveCopy.size() - 1);
-                } else itemsEffectiveCopy.add(item);
+            for (int i = 0; i < items.size(); i++) {
+                if (i > 0 && items.get(i) instanceof Redo) {
+                    if (items.get(i - 1) instanceof Undo) {
+                        itemsEffectiveCopy.remove(itemsEffectiveCopy.size() - 1);
+                    }
+                } else itemsEffectiveCopy.add(items.get(i));
             }
             return itemsEffectiveCopy;
         };

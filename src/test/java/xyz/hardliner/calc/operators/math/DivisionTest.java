@@ -13,21 +13,21 @@ public class DivisionTest {
         final var calc = calculator();
 
         calc
-            .process(new NumericOperand("81"))
-            .process(new NumericOperand("15.551"))
-            .process(new NumericOperand("10"));
+            .add(new NumericOperand("81"))
+            .add(new NumericOperand("15.551"))
+            .add(new NumericOperand("10"));
 
-        assertEquals("81 15.551 10", calc.print());
+        assertEquals("stack: 81 15.551 10", calc.print());
         assertEquals("81 15.551 10", calc.printHistory());
 
-        calc.process(new Division());
+        calc.add(new Division());
 
-        assertEquals("81 1.5551", calc.print());
+        assertEquals("stack: 81 1.5551", calc.print());
         assertEquals("81 15.551 10 /", calc.printHistory());
 
-        calc.process(new Division());
+        calc.add(new Division());
 
-        assertEquals("52.0866825284", calc.print());
+        assertEquals("stack: 52.0866825284", calc.print());
         assertEquals("81 15.551 10 / /", calc.printHistory());
     }
 

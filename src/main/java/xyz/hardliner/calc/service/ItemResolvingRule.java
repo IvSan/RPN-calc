@@ -1,6 +1,6 @@
 package xyz.hardliner.calc.service;
 
-import org.apache.commons.lang3.tuple.Pair;
+import xyz.hardliner.calc.operands.Operand;
 
 import java.util.Stack;
 import java.util.function.BiConsumer;
@@ -10,20 +10,19 @@ import java.util.function.BiConsumer;
  */
 public class ItemResolvingRule {
 
-    private final BiConsumer<Item, Pair<Stack<Item>, Stack<Item>>> processor;
+    private final BiConsumer<Item, Stack<Operand>> processor;
 
-    public ItemResolvingRule(BiConsumer<Item, Pair<Stack<Item>, Stack<Item>>> processor) {
+    public ItemResolvingRule(BiConsumer<Item, Stack<Operand>> processor) {
         this.processor = processor;
     }
 
     /**
      * Apply the rule and mutate {@link Calculator}'s state.
      *
-     * @param item    - processed {@link Item}.
-     * @param stack   - {@link Calculator}'s actual stack.
-     * @param history - {@link Calculator}'s history stack.
+     * @param item  - processed {@link Item}.
+     * @param stack - {@link Calculator}'s actual stack.
      */
-    public void apply(Item item, Stack<Item> stack, Stack<Item> history) {
-        processor.accept(item, Pair.of(stack, history));
+    public void apply(Item item, Stack<Operand> stack) {
+        processor.accept(item, stack);
     }
 }
