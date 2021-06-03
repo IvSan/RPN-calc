@@ -170,4 +170,23 @@ public class UndoTest {
         assertEquals("10 undo undo", calc.printHistory());
     }
 
+    @Test
+    public void should_undo_clear() {
+        final var calc = calculator();
+
+        calc
+            .add(new NumericOperand("81"))
+            .add(new NumericOperand("15.5"))
+            .add(new NumericOperand("10"))
+            .add(new Clear());
+
+        assertEquals("stack: ", calc.print());
+        assertEquals("81 15.5 10 clear", calc.printHistory());
+
+        calc.add(new Undo());
+
+        assertEquals("stack: 81 15.5 10", calc.print());
+        assertEquals("81 15.5 10 clear undo", calc.printHistory());
+    }
+
 }

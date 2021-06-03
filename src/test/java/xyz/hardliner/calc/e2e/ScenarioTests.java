@@ -93,4 +93,22 @@ public class ScenarioTests {
         assertEquals("operator '*' (position: 15): insufficient parameters\nstack: 11", sut.print());
     }
 
+    @Test
+    public void scenario_9() {
+        final var sut = new Calculator(new Parser());
+
+        sut.add("1 2 3 undo undo redo redo +");
+        assertEquals("stack: 1 5", sut.print());
+    }
+
+    @Test
+    public void scenario_10() {
+        final var sut = new Calculator(new Parser());
+
+        sut.add("1 2 3 redo clear undo");
+        assertEquals("stack: 1 2 3", sut.print());
+        sut.add("redo");
+        assertEquals("stack: ", sut.print());
+    }
+
 }

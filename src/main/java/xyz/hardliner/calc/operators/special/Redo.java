@@ -31,7 +31,7 @@ public class Redo implements SpecialOperator {
             var itemsEffectiveCopy = new ArrayList<Item>();
             for (int i = 0; i < items.size(); i++) {
                 if (i > 0 && items.get(i) instanceof Redo) {
-                    if (items.get(i - 1) instanceof Undo) {
+                    if (itemsEffectiveCopy.get(itemsEffectiveCopy.size() - 1) instanceof Undo) {
                         itemsEffectiveCopy.remove(itemsEffectiveCopy.size() - 1);
                     }
                 } else itemsEffectiveCopy.add(items.get(i));
