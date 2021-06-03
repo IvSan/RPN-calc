@@ -11,8 +11,9 @@ public class App {
         final var input = new CLIInput();
         final var output = new CLIOutput();
         final var calc = new Calculator(new Parser());
-        while (true) {
-            calc.add(input.nextLine());
+
+        while (!input.nextLine().equals("exit")) {
+            calc.add(input.repeatLastLine());
             output.outputLine(calc.print());
         }
     }

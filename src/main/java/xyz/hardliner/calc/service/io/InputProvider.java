@@ -4,4 +4,6 @@ public interface InputProvider {
 
     String nextLine();
 
+    String repeatLastLine();
+
 }
