@@ -1,8 +1,9 @@
 package xyz.hardliner.calc.service;
 
 import xyz.hardliner.calc.exception.CalculatorException;
-import xyz.hardliner.calc.exception.CalculatorExceptionWithLastSuccessfulState;
 import xyz.hardliner.calc.operands.Operand;
+import xyz.hardliner.calc.service.dto.CalculationResult;
+import xyz.hardliner.calc.service.dto.CalculationStatus;
 import xyz.hardliner.calc.utils.Counter;
 import xyz.hardliner.calc.utils.Operators;
 
@@ -12,6 +13,8 @@ import java.util.List;
 import java.util.Stack;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static xyz.hardliner.calc.service.dto.CalculationStatus.SUCCESS;
 
 /**
  * Core logic entity with it's state, which contain actual operational stack and historical stack of instructions.
@@ -27,19 +30,25 @@ public class Calculator {
         items = new ArrayList<>();
     }
 
-    public String calculate(String line) {
+    /**
+     * Make {@link Calculator} consume next input line.
+     *
+     * @param line - input.
+     * @return - itself with updated stack.
+     */
+    public Calculator add(String line) {
         if ("exit".equals(line)) {
             System.exit(0);
         }
         add(parser.parseLine(line));
-        return print();
+        return this;
     }
 
     /**
      * Make {@link Calculator} consume next input {@link Item}.
      *
      * @param item - input.
-     * @return - itself with updated state.
+     * @return - itself with updated stack.
      */
     public Calculator add(Item item) {
         items.add(item);
@@ -50,14 +59,17 @@ public class Calculator {
      * Make {@link Calculator} consume collection of input {@link Item}s.
      *
      * @param items - input.
-     * @return - itself with updated state.
+     * @return - itself with updated stack.
      */
     public Calculator add(Collection<Item> items) {
         this.items.addAll(items);
         return this;
     }
 
-    public Stack<Operand> getResult() {
+    /**
+     * @return - Result of stack calculation.
+     */
+    public CalculationResult getResult() {
         var itemsEffectiveCopy = List.copyOf(items);
         for (Function<List<Item>, List<Item>> special : Operators.specialOperatorsResolvingRules()) {
             itemsEffectiveCopy = special.apply(itemsEffectiveCopy);
@@ -71,21 +83,23 @@ public class Calculator {
                 positionPointer.increment(item.print().length() + 1);
             });
         } catch (CalculatorException ex) {
-            throw new CalculatorExceptionWithLastSuccessfulState(populatePositionPlaceholder(ex.getMessage(), positionPointer.get() + 1), result);
+            return new CalculationResult(CalculationStatus.ERROR, result, populatePositionPlaceholder(ex.getMessage(), positionPointer.get() + 1));
         }
 
-        return result;
+        return new CalculationResult(result);
     }
 
     /**
      * @return - String representation of actual operational stack.
      */
     public String print() {
-        try {
-            return "stack: " + getResult().stream().map(Item::print).collect(Collectors.joining(" "));
-        } catch (CalculatorExceptionWithLastSuccessfulState ex) {
-            final var calcOutput = ex.lastSuccessfulState.stream().map(Item::print).collect(Collectors.joining(" "));
-            return ex.getMessage() + "\nstack: " + calcOutput;
+        final var calcResult = getResult();
+        final var printLine = "stack: " + calcResult.result.stream().map(Item::print).collect(Collectors.joining(" "));
+
+        if (SUCCESS.equals(calcResult.status)) {
+            return printLine;
+        } else {
+            return (calcResult.errorMessage.map(s -> s + "\n").orElse("")) + printLine;
         }
     }
 

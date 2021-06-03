@@ -12,7 +12,8 @@ public class App {
         final var output = new CLIOutput();
         final var calc = new Calculator(new Parser());
         while (true) {
-            output.outputLine(calc.calculate(input.nextLine()));
+            calc.add(input.nextLine());
+            output.outputLine(calc.print());
         }
     }
 

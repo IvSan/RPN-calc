@@ -11,67 +11,86 @@ public class ScenarioTests {
     @Test
     public void scenario_1() {
         final var sut = new Calculator(new Parser());
-        assertEquals("stack: 5 2", sut.calculate("5 2"));
+        sut.add("5 2");
+        assertEquals("stack: 5 2", sut.print());
     }
 
     @Test
     public void scenario_2() {
         final var sut = new Calculator(new Parser());
 
-        assertEquals("stack: 1.4142135623", sut.calculate("2 sqrt"));
-        assertEquals("stack: 3", sut.calculate("clear 9 sqrt"));
+        sut.add("2 sqrt");
+        assertEquals("stack: 1.4142135623", sut.print());
+        sut.add("clear 9 sqrt");
+        assertEquals("stack: 3", sut.print());
     }
 
     @Test
     public void scenario_3() {
         final var sut = new Calculator(new Parser());
 
-        assertEquals("stack: 3", sut.calculate("5 2 -"));
-        assertEquals("stack: 0", sut.calculate("3 -"));
-        assertEquals("stack: ", sut.calculate("clear"));
+        sut.add("5 2 -");
+        assertEquals("stack: 3", sut.print());
+        sut.add("3 -");
+        assertEquals("stack: 0", sut.print());
+        sut.add("clear");
+        assertEquals("stack: ", sut.print());
     }
 
     @Test
     public void scenario_4() {
         final var sut = new Calculator(new Parser());
 
-        assertEquals("stack: 5 4 3 2", sut.calculate("5 4 3 2"));
-        assertEquals("stack: 20", sut.calculate("undo undo *"));
-        assertEquals("stack: 100", sut.calculate("5 *"));
-        assertEquals("stack: 20 5", sut.calculate("undo"));
+        sut.add("5 4 3 2");
+        assertEquals("stack: 5 4 3 2", sut.print());
+        sut.add("undo undo *");
+        assertEquals("stack: 20", sut.print());
+        sut.add("5 *");
+        assertEquals("stack: 100", sut.print());
+        sut.add("undo");
+        assertEquals("stack: 20 5", sut.print());
     }
 
     @Test
     public void scenario_5() {
         final var sut = new Calculator(new Parser());
 
-        assertEquals("stack: 7 6", sut.calculate("7 12 2 /"));
-        assertEquals("stack: 42", sut.calculate("*"));
-        assertEquals("stack: 10.5", sut.calculate("4 /"));
+        sut.add("7 12 2 /");
+        assertEquals("stack: 7 6", sut.print());
+        sut.add("*");
+        assertEquals("stack: 42", sut.print());
+        sut.add("4 /");
+        assertEquals("stack: 10.5", sut.print());
     }
 
     @Test
     public void scenario_6() {
         final var sut = new Calculator(new Parser());
 
-        assertEquals("stack: 1 2 3 4 5", sut.calculate("1 2 3 4 5"));
-        assertEquals("stack: 1 2 3 20", sut.calculate("*"));
-        assertEquals("stack: -1", sut.calculate("clear 3 4 -"));
+        sut.add("1 2 3 4 5");
+        assertEquals("stack: 1 2 3 4 5", sut.print());
+        sut.add("*");
+        assertEquals("stack: 1 2 3 20", sut.print());
+        sut.add("clear 3 4 -");
+        assertEquals("stack: -1", sut.print());
     }
 
     @Test
     public void scenario_7() {
         final var sut = new Calculator(new Parser());
 
-        assertEquals("stack: 1 2 3 4 5", sut.calculate("1 2 3 4 5"));
-        assertEquals("stack: 120", sut.calculate("* * * *"));
+        sut.add("1 2 3 4 5");
+        assertEquals("stack: 1 2 3 4 5", sut.print());
+        sut.add("* * * *");
+        assertEquals("stack: 120", sut.print());
     }
 
     @Test
     public void scenario_8() {
         final var sut = new Calculator(new Parser());
 
-        assertEquals("operator '*' (position: 15): insufficient parameters\nstack: 11", sut.calculate("1 2 3 * 5 + * * 6 5"));
+        sut.add("1 2 3 * 5 + * * 6 5");
+        assertEquals("operator '*' (position: 15): insufficient parameters\nstack: 11", sut.print());
     }
 
 }

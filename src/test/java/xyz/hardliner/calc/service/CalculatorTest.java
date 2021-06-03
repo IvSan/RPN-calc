@@ -46,8 +46,10 @@ public class CalculatorTest {
 
         final var sut = new Calculator(parser);
 
-        assertEquals("stack: 3.0822070014", sut.calculate(inputFirst));
-        assertEquals("stack: 12.3288280059", sut.calculate(inputSecond));
+        sut.add(inputFirst);
+        assertEquals("stack: 3.0822070014", sut.print());
+        sut.add(inputSecond);
+        assertEquals("stack: 12.3288280059", sut.print());
 
         verify(parser, times(2)).parseLine(any(String.class));
         verifyNoMoreInteractions(parser);
@@ -65,7 +67,8 @@ public class CalculatorTest {
 
         final var sut = new Calculator(parser);
 
-        assertEquals("operator 'sqrt' (position: 9): cannot apply to '-0.5'\nstack: -0.5", sut.calculate(input));
+        sut.add(input);
+        assertEquals("operator 'sqrt' (position: 9): cannot apply to '-0.5'\nstack: -0.5", sut.print());
 
         verify(parser, times(1)).parseLine(eq(input));
         verifyNoMoreInteractions(parser);
